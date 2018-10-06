@@ -28,20 +28,28 @@ public class ImageWriter {
 			throw new IllegalArgumentException("Given path cannot be null");
 		}
 		
+		if(path.lastIndexOf(".") == -1 || !path.substring(path.lastIndexOf(".")).equals(".ppm")) {
+			throw new IllegalArgumentException("Given filename must have an extension of .ppm");
+		}
+		
 		try {
 			BufferedWriter writer = new BufferedWriter(new FileWriter(path));
 			
-			writer.write("P6");
-			writer.newLine();
+			writer.write("P3");
+			writer.write('\n');
 			writer.write(image.getWidth() + " " + image.getHeight());
+			writer.write('\n');
+			writer.write("255");
+			writer.write('\n');
 			
 			for(int y = 0; y < image.getHeight(); y++) {
 				for(int x = 0; x < image.getWidth(); x++) {
 					Pixel thisPixel = image.getPixelAt(x, y);
-					double alphaModifier = thisPixel.getAlpha() / 255.0;
-					writer.write((int)(thisPixel.getRed() * alphaModifier));
-					writer.write((int)(thisPixel.getGreen() * alphaModifier));
-					writer.write((int)(thisPixel.getBlue() * alphaModifier));
+					
+					writer.write(Integer.toString(thisPixel.getRed()) + " ");
+					writer.write(Integer.toString(thisPixel.getGreen()) + " ");
+					writer.write(Integer.toString(thisPixel.getBlue()) + " ");
+					
 				}
 			}
 			
@@ -49,5 +57,20 @@ public class ImageWriter {
 		} catch (IOException e) {
 			throw new IllegalArgumentException("Error opening/writing the given file");
 		}	
+	}
+	
+	public static void main(String[] args) {
+		Image img = new Image(255, 255);
+		
+		
+		for(int y = 0; y < 255; y++) {
+			for(int x = 0; x < 255; x++) {
+				Pixel thisPixel = img.getPixelAt(x, y);
+				Pixel toBlendOver = new Pixel(x, 0, 0, 255);
+				thisPixel.becomeCopyOf(toBlendOver.blendOver(thisPixel));
+			}
+		}
+		
+		writeImage(img, "out.ppm");
 	}
 }

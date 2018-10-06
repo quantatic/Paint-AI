@@ -19,7 +19,7 @@ public class Pixel extends Observable{
 	private int colorValues;
 	
 	public Pixel() {
-		this(0, 0, 0, 0);//Create white pixel by default
+		this(255, 255, 255, 255); //Create white pixel by default
 	}
 	
 	@Override
@@ -167,6 +167,7 @@ public class Pixel extends Observable{
 		setAlpha(toCopy.getAlpha());
 		notifyObservers();
 	}
+	
 	@Override
 	public String toString() {
 		return "Pixel[ colorValues = " + getRed() + ", " + getGreen() + ", " + getBlue() + ", Opacity: " + getAlpha() + "]";

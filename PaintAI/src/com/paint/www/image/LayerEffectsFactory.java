@@ -51,8 +51,8 @@ public class LayerEffectsFactory {
 		Pixel newPixel, leftPixel, rightPixel;
 		for(int x = 0; x < width; x++) {
 			for(int y = 0; y < height; y++) {
-				double yBlendFactor = (y/(height-1));
-				double xBlendFactor = (x/(width-1));
+				double yBlendFactor = ((double)y/(height-1));
+				double xBlendFactor = ((double)x/(width-1));
 				leftPixel = blendPixelColors(upperLeft, lowerLeft, yBlendFactor, alpha);
 				rightPixel = blendPixelColors(upperRight, lowerRight, yBlendFactor, alpha);
 				newPixel = blendPixelColors(leftPixel, rightPixel, xBlendFactor, alpha);
@@ -75,9 +75,9 @@ public class LayerEffectsFactory {
 		double diff_green = toBlendWith.getGreen() - mainPixel.getGreen();
 		double diff_blue = toBlendWith.getBlue() - mainPixel.getBlue();
 		
-		int newRed = (int) (255 * (mainPixel.getRed()+(diff_red*factor)));
-		int newGreen = (int) (255 * (mainPixel.getGreen()+(diff_green*factor)));
-		int newBlue = (int) (255 * (mainPixel.getBlue()+(diff_blue*factor)));
+		int newRed = (int) (mainPixel.getRed()+(diff_red * factor));
+		int newGreen = (int) (mainPixel.getGreen()+(diff_green * factor));
+		int newBlue = (int) (mainPixel.getBlue()+(diff_blue * factor));
 		return new Pixel(newRed, newGreen, newBlue, alpha);
 	}
 }

@@ -1,4 +1,4 @@
-package com.paint.www.testing;
+package com.paint.www.image;
 
 import static org.junit.Assert.*;
 

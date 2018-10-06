@@ -6,26 +6,51 @@ import java.util.Observable;
 import java.util.Observer;
 
 public class Image implements Observer{
+	
 	private List<Layer> layerList;
 	private Layer currentImage;
 	
+	
 	public Image() {
-		this(null);
+		this(0,0);
 	}
 	
-	public Image(List<Layer> layerList) {
-		if(layerList == null) {
-			this.layerList = new ArrayList<Layer>();
-			this.layerList.add(new Layer(0, 0));
-		}else {
-			this.layerList = layerList;
-		}
-		
-		for(Layer l : this.layerList) {
-			l.addObserver(this);
-		}
+	public Image(int width, int height) {
+		this.layerList = new ArrayList<Layer>();
+		this.layerList.add(new Layer(width, height));
 		this.currentImage = this.getRenderImage();
 	}
+	/**
+	 * Adds a {@link Layer} as the upper-most {@link Layer}
+	 * @param addLayer {@link Layer} to add
+	 */
+	public void addLayer(Layer addLayer) {
+		addLayerAt(0, addLayer);
+	}
+	/**
+	 * Adds a {@link Layer} at the specified index
+	 * @param index index to add at
+	 * @param addLayer {@link Layer} to be added
+	 */
+	public void addLayerAt(int index, Layer addLayer) {
+		if(index > layerList.size()) {
+			throw new IllegalArgumentException("Index is bigger than the layer size");
+		}
+		layerList.add(index, addLayer);
+		this.currentImage = this.getRenderImage();
+	}
+	/**
+	 * This function removes a {@link Layer} at a specific index
+	 * @param index index to remove at
+	 */
+	public void removeLayerAt(int index) {
+		if(index >= layerList.size()) {
+			throw new IllegalArgumentException("Index is bigger than the layer size");
+		}
+		layerList.remove(index);
+		this.currentImage = this.getRenderImage();
+	}
+	
 	/**
 	 * This function merges all the layers from the top down in order to create a single layer that is what will be displayed
 	 * @return {@link Layer} merged Layer

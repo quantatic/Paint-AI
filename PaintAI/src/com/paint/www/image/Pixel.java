@@ -19,7 +19,7 @@ public class Pixel extends Observable{
 	private int colorValues;
 	
 	public Pixel() {
-		this(255, 255, 255, 255); //Create white pixel by default
+		this(255, 255, 255, 0); //Create white pixel by default
 	}
 	
 	@Override

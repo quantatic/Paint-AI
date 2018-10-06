@@ -51,6 +51,8 @@ public class ImageWriter {
 					writer.write(Integer.toString(thisPixel.getBlue()) + " ");
 					
 				}
+				
+				writer.write('\n');
 			}
 			
 			writer.close();
@@ -60,16 +62,39 @@ public class ImageWriter {
 	}
 	
 	public static void main(String[] args) {
-		Image img = new Image(255, 255);
+		Image img = new Image(400, 400);
 		
+		Layer layer1 = new Layer(400, 400);
+		Layer layer2 = new Layer(400, 400);
+		Layer layer3 = new Layer(400, 400);
 		
-		for(int y = 0; y < 255; y++) {
-			for(int x = 0; x < 255; x++) {
-				Pixel thisPixel = img.getPixelAt(x, y);
-				Pixel toBlendOver = new Pixel(x, 0, 0, 255);
-				thisPixel.becomeCopyOf(toBlendOver.blendOver(thisPixel));
+		for(int y = 100; y < 200; y++) {
+			for(int x = 100; x < 200; x++) {
+				Pixel thisPixel = layer1.getPixelAt(x, y);
+				Pixel overPixel = new Pixel(255, 0, 0, 255);
+				thisPixel.becomeCopyOf(overPixel.blendOver(thisPixel));
 			}
 		}
+		
+		for(int y = 150; y < 250; y++) {
+			for(int x = 150; x < 250; x++) {
+				Pixel thisPixel = layer2.getPixelAt(x, y);
+				Pixel overPixel = new Pixel(0, 255, 0, 127);
+				thisPixel.becomeCopyOf(overPixel.blendOver(thisPixel));
+			}
+		}
+		
+		for(int y = 200; y < 300; y++) {
+			for(int x = 200; x < 300; x++) {
+				Pixel thisPixel = layer3.getPixelAt(x, y);
+				Pixel overPixel = new Pixel(0, 0, 255, 255);
+				thisPixel.becomeCopyOf(overPixel.blendOver(thisPixel));
+			}
+		}
+		
+		img.addLayer(layer1);
+		img.addLayer(layer2);
+		img.addLayer(layer3);
 		
 		writeImage(img, "out.ppm");
 	}

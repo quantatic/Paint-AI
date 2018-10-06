@@ -99,15 +99,15 @@ public class Pixel {
 		if(lowerPixel == null) {
 			throw new IllegalArgumentException("lowerPixel can not be null");
 		}
-		double selfOpacity = getAlpha()/255.0;
-		double otherOpacity = lowerPixel.getAlpha()/255.0; 
-		int red,green,blue,newOpacity;
+		double selfOpacity = getAlpha() / 255.0;
+		double otherOpacity = lowerPixel.getAlpha() / 255.0; 
+		int red, green, blue, newOpacity;
 		
-		red = calculateBlendedChannel(getRed(),lowerPixel.getRed(),selfOpacity,otherOpacity);
-		green = calculateBlendedChannel(getGreen(),lowerPixel.getGreen(),selfOpacity,otherOpacity);
-		blue = calculateBlendedChannel(getBlue(),lowerPixel.getBlue(),selfOpacity,otherOpacity);
-		newOpacity = (int) (255*calculateBlendedOpacity(selfOpacity,otherOpacity));
-		return new Pixel(red,green,blue,newOpacity);
+		red = calculateBlendedChannel(getRed(), selfOpacity, lowerPixel.getRed(), otherOpacity);
+		green = calculateBlendedChannel(getGreen(), selfOpacity, lowerPixel.getGreen(), otherOpacity);
+		blue = calculateBlendedChannel(getBlue(), selfOpacity, lowerPixel.getBlue(), otherOpacity);
+		newOpacity = (int)(255 * calculateBlendedOpacity(selfOpacity, otherOpacity));
+		return new Pixel(red, green, blue, newOpacity);
 	}
 	/**
 	 * This function returns a new color channel value after painting one color on another
@@ -118,8 +118,9 @@ public class Pixel {
 	 * @param alphaBottom the alpha value (0.0-1.0) of the bottom pixel
 	 * @return new combined color value
 	 */
-	private int calculateBlendedChannel(int colorTop, int colorBottom, double alphaTop, double alphaBottom) {
-		return (int) (((colorTop*alphaTop) + (colorBottom*alphaBottom)*(1-alphaTop))/(alphaTop + (alphaBottom*(1-alphaTop))));
+	private int calculateBlendedChannel(int colorTop, double alphaTop, int colorBottom, double alphaBottom) {
+		return (int)(((colorTop * alphaTop) + (colorBottom * alphaBottom) * (1 - alphaTop)) 
+				/ (alphaTop + (alphaBottom * (1 - alphaTop))));
 	}
 	/**
 	 * This function returns a new alpha value after painting one color on another
@@ -128,7 +129,7 @@ public class Pixel {
 	 * @return new combined alpha value
 	 */
 	private double calculateBlendedOpacity(double alphaTop, double alphaBottom) {
-		return alphaTop + alphaBottom*(1-alphaTop);
+		return alphaTop + alphaBottom * (1 - alphaTop);
 	}
 	
 }

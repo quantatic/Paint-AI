@@ -16,7 +16,7 @@ public class Pixel {
 	private int colorValues;
 	
 	public Pixel() {
-		this(0, 0, 0, 255);//Create white pixel by default
+		this(0, 0, 0, 0);//Create white pixel by default
 	}
 	
 	@Override

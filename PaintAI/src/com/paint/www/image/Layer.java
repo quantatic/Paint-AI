@@ -6,6 +6,7 @@ import java.util.Observer;
 /**
  * Represents a layer of an image, consisting of {@link Pixel}s.
  * @author Aidan Beggs
+ * @author Itai Rivkin-Fish
  * @version 10/6/18
  */
 public class Layer extends Observable implements Observer{

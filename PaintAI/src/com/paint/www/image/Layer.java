@@ -1,11 +1,14 @@
 package com.paint.www.image;
 
+import java.util.Observable;
+import java.util.Observer;
+
 /**
  * Represents a layer of an image, consisting of {@link Pixel}s.
  * @author Aidan Beggs
  * @version 10/6/18
  */
-public class Layer {
+public class Layer extends Observable implements Observer{
 	
 	/** The width of {@link Pixel}s in this layer. */
 	private final int width;
@@ -95,5 +98,10 @@ public class Layer {
 			}
 		}
 		return newLayer;
+	}
+
+	@Override
+	public void update(Observable o, Object arg) {
+		notifyObservers();
 	}
 }

@@ -1,4 +1,7 @@
 package com.paint.www.image;
+
+import java.util.Observable;
+
 /**
  * This class holds data on individual pixels, storing their RGB and Alpha
  * @author Itai Rivkin-Fish
@@ -6,7 +9,7 @@ package com.paint.www.image;
  * @version 10/6/18
  * 
  */
-public class Pixel {
+public class Pixel extends Observable{
 	/* colorValues is a single int that holds the Red,Green,Blue and Alpha of the Pixel
 	 * Red		Green	 Blue	  Alpha	
 	 * RRRRRRRR_GGGGGGGG_BBBBBBBB_AAAAAAAA
@@ -52,7 +55,7 @@ public class Pixel {
 	 * @param alpha value between 0-255 to set the alpha as
 	 * @throws IllegalArgumentException if alpha is not between 0-255
 	 */
-	public void setAlpha(int alpha) {
+	private void setAlpha(int alpha) {
 		if(alpha < 0 || alpha > 255) {
 			throw new IllegalArgumentException("Illegal Alpha Value");
 		}
@@ -75,21 +78,21 @@ public class Pixel {
 		colorValues = (colorValues & 0xFF_FF_FF_00) | (alpha);
 	}
 
-	public void setBlue(int blue) {
+	private void setBlue(int blue) {
 		if(blue < 0 || blue > 255) {
 			throw new IllegalArgumentException("Illegal Blue Value");
 		}
 		colorValues = (colorValues & 0xFF_FF_00_FF) | (blue << 8);
 	}
 
-	public void setGreen(int green) {
+	private void setGreen(int green) {
 		if(green < 0 || green > 255) {
 			throw new IllegalArgumentException("Illegal Green Value");
 		}
 		colorValues = (colorValues & 0xFF_00_FF_FF) | (green << 16);
 	}
 
-	public void setRed(int red) {
+	private void setRed(int red) {
 		if(red < 0 || red > 255) {
 			throw new IllegalArgumentException("Illegal Red Value");
 		}
@@ -162,6 +165,7 @@ public class Pixel {
 		setBlue(toCopy.getBlue());
 		setGreen(toCopy.getGreen());
 		setAlpha(toCopy.getAlpha());
+		notifyObservers();
 	}
 	@Override
 	public String toString() {

@@ -153,7 +153,16 @@ public class Pixel {
 	private double calculateBlendedOpacity(double alphaTop, double alphaBottom) {
 		return alphaTop + alphaBottom * (1 - alphaTop);
 	}
-
+	/**
+	 * This function converts this pixel to a copy of the other pixel
+	 * @param toCopy pixel to become copy of
+	 */
+	public void becomeCopyOf(Pixel toCopy) {
+		setRed(toCopy.getRed());
+		setBlue(toCopy.getBlue());
+		setGreen(toCopy.getGreen());
+		setAlpha(toCopy.getAlpha());
+	}
 	@Override
 	public String toString() {
 		return "Pixel[ colorValues = " + getRed() + ", " + getGreen() + ", " + getBlue() + ", Opacity: " + getAlpha() + "]";

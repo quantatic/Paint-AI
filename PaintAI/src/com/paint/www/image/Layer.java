@@ -53,4 +53,40 @@ public class Layer {
 	public Pixel getPixelAt(int x, int y) {
 		return this.canvas[x][y];
 	}
+	/**
+	 * This function merges this Layer over another, lower Layer
+	 * @param lowerLayer The lower Layer to merge
+	 * @return new Layer with the merge
+	 */
+	public Layer mergeOver(Layer lowerLayer) {
+		if(lowerLayer == null) {
+			throw new IllegalArgumentException("lowerLayer can't be null");
+		}
+		
+		int newWidth = Math.max(getWidth(), lowerLayer.getWidth());
+		int newHeight = Math.max(getHeight(), lowerLayer.getHeight());
+		Layer newLayer = new Layer(newWidth, newHeight);
+		Pixel lowerPixel, upperPixel, mergedPixel;
+		for(int x = 0; x < newLayer.getWidth(); x++) {
+			for(int y = 0; y < newLayer.getHeight(); y++) {
+				if(x < lowerLayer.getWidth() && y < lowerLayer.getHeight()) {
+					lowerPixel = lowerLayer.getPixelAt(x,y);
+				}else {
+					lowerPixel = new Pixel(0, 0, 0, 0);
+				}
+				
+				if(x < getWidth() && y < getHeight()) {
+					upperPixel = getPixelAt(x,y);
+				}else {
+					upperPixel = new Pixel(0, 0, 0, 0);
+				}
+				
+				mergedPixel = upperPixel.blendOver(lowerPixel);
+				
+				newLayer.getPixelAt(x, y).becomeCopyOf(mergedPixel);
+				
+			}
+		}
+		return newLayer;
+	}
 }

@@ -17,7 +17,6 @@ public class PixelTests {
 		assertEquals(whitePixel, whitePixel.blendOver(blackPixel));
 		assertEquals(blackPixel, blackPixel.blendOver(whitePixel));
 		System.out.println(semiOpaqueRed.blendOver(semiOpaqueBlue));
-		
 	}
 
 }

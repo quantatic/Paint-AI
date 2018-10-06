@@ -1,6 +1,19 @@
 package com.paint.www.image;
-
+/**
+ * 
+ * @author Itai Rivkin-Fish
+ * @author Aidan Beggs
+ * @version 10/6/18
+ * 
+ * This class holds data on individual pixels, storing their RGB and Alpha
+ */
 public class Pixel {
+	/* colorValues is a single int that holds the Red,Green,Blue and Alpha of the Pixel
+	 * Red		Green	 Blue	  Alpha	
+	 * RRRRRRRR_GGGGGGGG_BBBBBBBB_AAAAAAAA
+	 * <- Most significant bit
+	 * 			   Least significant bit->
+	 */
 	private int colorValues;
 	
 	public Pixel() {
@@ -13,11 +26,31 @@ public class Pixel {
 		setBlue(blue);
 		setAlpha(alpha);
 	}
-
+	/**
+	 * Setter for the Alpha value
+	 * @param alpha value between 0-255 to set the alpha as
+	 * @throws IllegalArgumentException if alpha is not between 0-255
+	 */
 	public void setAlpha(int alpha) {
 		if(alpha < 0 || alpha > 255) {
 			throw new IllegalArgumentException("Illegal Alpha Value");
 		}
+		/*
+		 * Red		Green	 Blue	  Alpha	
+		 * 11111111_11111111_11111111_00000000
+		 * &
+		 * XXXXXXXX_XXXXXXXX_XXXXXXXX_XXXXXXXX
+		 * =
+		 * XXXXXXXX_XXXXXXXX_XXXXXXXX_00000000
+		 * First we clear the value
+		 * then
+		 * XXXXXXXX_XXXXXXXX_XXXXXXXX_00000000
+		 * |
+		 * 00000000_00000000_00000000_AAAAAAAA
+		 * =
+		 * XXXXXXXX_XXXXXXXX_XXXXXXXX_AAAAAAAA
+		 * set the alpha
+		 */
 		colorValues = (colorValues & 0xFF_FF_FF_00) | (alpha);
 	}
 

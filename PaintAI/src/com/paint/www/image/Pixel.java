@@ -16,9 +16,31 @@ public class Pixel {
 	private int colorValues;
 	
 	public Pixel() {
-		this(0, 0, 0, 0);
+		this(0, 0, 0, 255);//Create white pixel by default
 	}
 	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + colorValues;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Pixel other = (Pixel) obj;
+		if (colorValues != other.colorValues)
+			return false;
+		return true;
+	}
+
 	public Pixel(int red, int green, int blue, int alpha) {
 		setRed(red);
 		setGreen(green);
@@ -130,6 +152,11 @@ public class Pixel {
 	 */
 	private double calculateBlendedOpacity(double alphaTop, double alphaBottom) {
 		return alphaTop + alphaBottom * (1 - alphaTop);
+	}
+
+	@Override
+	public String toString() {
+		return "Pixel[ colorValues = " + getRed() + ", " + getGreen() + ", " + getBlue() + ", Opacity: " + getAlpha() + "]";
 	}
 	
 }

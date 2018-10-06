@@ -1,20 +1,25 @@
 package com.paint.www.image;
 
+/**
+ * Represents a layer of an image, consisting of {@link Pixel}s.
+ * @author Aidan Beggs
+ * @version 10/6/18
+ */
 public class Layer {
 	
-	/** The width of pixels in this layer. */
+	/** The width of {@link Pixel}s in this layer. */
 	private final int width;
 	
-	/** The height of pixels in this layer. */
+	/** The height of {@link Pixel}s in this layer. */
 	private final int height;
 	
-	/** The 2d array of pixels that is this layer. */
+	/** The 2d array of {@link Pixel}s that is this layer. */
 	private Pixel[][] canvas; //access as 
 	
 	/**
-	 * Creates a new Layer from a given width and height, and initializes it with pixels.
-	 * @param width the width of pixels in this layer.
-	 * @param height the height of pixels in this layer.
+	 * Creates a new Layer from a given width and height, and initializes it with {@link Pixel}s.
+	 * @param width the width of {@link Pixel}s in this layer.
+	 * @param height the height of {@link Pixel}s in this layer.
 	 * @throws IllegalArgumentException if the given width or height is an illegal value.
 	 */
 	public Layer(int width, int height) {

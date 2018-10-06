@@ -27,6 +27,16 @@ public class Layer extends Observable implements Observer{
 	 * @throws IllegalArgumentException if the given width or height is an illegal value.
 	 */
 	public Layer(int width, int height) {
+		this(width, height, 0);
+	}
+	/**
+	 * Creates a new Layer from a given width and height, and initializes it with {@link Pixel}s.
+	 * @param width the width of {@link Pixel}s in this layer.
+	 * @param height the height of {@link Pixel}s in this layer.
+	 * @param alpha Value of the alpha
+	 * @throws IllegalArgumentException if the given width or height is an illegal value.
+	 */
+	public Layer(int width, int height, int alpha) {
 		if(width < 0) {
 			throw new IllegalArgumentException("Width cannot be less than or equal to 0");
 		}
@@ -41,7 +51,7 @@ public class Layer extends Observable implements Observer{
 		
 		for(int x = 0; x < width; x++) {
 			for(int y = 0; y < height; y++) {
-				this.canvas[x][y] = new Pixel();
+				this.canvas[x][y] = new Pixel(255, 255, 255, alpha);
 				this.canvas[x][y].addObserver(this);
 			}
 		}

@@ -1,11 +1,10 @@
 package com.paint.www.image;
 /**
- * 
+ * This class holds data on individual pixels, storing their RGB and Alpha
  * @author Itai Rivkin-Fish
  * @author Aidan Beggs
  * @version 10/6/18
  * 
- * This class holds data on individual pixels, storing their RGB and Alpha
  */
 public class Pixel {
 	/* colorValues is a single int that holds the Red,Green,Blue and Alpha of the Pixel
@@ -90,4 +89,46 @@ public class Pixel {
 	public int getAlpha() {
 		return colorValues & 0xFF;
 	}
+	/**
+	 * https://en.wikipedia.org/wiki/Alpha_compositing
+	 * This function blends this {@link Pixel} over the argument {@link Pixel}
+	 * @param lowerPixel {@link Pixel} to blend over 
+	 * @return new {@link Pixel} object with the blend
+	 */
+	public Pixel blendOver(Pixel lowerPixel) {
+		if(lowerPixel == null) {
+			throw new IllegalArgumentException("lowerPixel can not be null");
+		}
+		double selfOpacity = getAlpha()/255.0;
+		double otherOpacity = lowerPixel.getAlpha()/255.0; 
+		int red,green,blue,newOpacity;
+		
+		red = calculateBlendedChannel(getRed(),lowerPixel.getRed(),selfOpacity,otherOpacity);
+		green = calculateBlendedChannel(getGreen(),lowerPixel.getGreen(),selfOpacity,otherOpacity);
+		blue = calculateBlendedChannel(getBlue(),lowerPixel.getBlue(),selfOpacity,otherOpacity);
+		newOpacity = (int) (255*calculateBlendedOpacity(selfOpacity,otherOpacity));
+		return new Pixel(red,green,blue,newOpacity);
+	}
+	/**
+	 * This function returns a new color channel value after painting one color on another
+	 * https://en.wikipedia.org/wiki/Alpha_compositing
+	 * @param colorTop the color value (0-255) of the top pixel
+	 * @param colorBottom the color value (0-255) of the bottom pixel
+	 * @param alphaTop the alpha value (0.0-1.0) of the top pixel
+	 * @param alphaBottom the alpha value (0.0-1.0) of the bottom pixel
+	 * @return new combined color value
+	 */
+	private int calculateBlendedChannel(int colorTop, int colorBottom, double alphaTop, double alphaBottom) {
+		return (int) (((colorTop*alphaTop) + (colorBottom*alphaBottom)*(1-alphaTop))/(alphaTop + (alphaBottom*(1-alphaTop))));
+	}
+	/**
+	 * This function returns a new alpha value after painting one color on another
+	 * @param alphaTop the alpha value (0.0-1.0) of the top pixel
+	 * @param alphaBottom the alpha value (0.0-1.0) of the bottom pixel
+	 * @return new combined alpha value
+	 */
+	private double calculateBlendedOpacity(double alphaTop, double alphaBottom) {
+		return alphaTop + alphaBottom*(1-alphaTop);
+	}
+	
 }

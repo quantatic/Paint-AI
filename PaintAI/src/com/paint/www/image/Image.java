@@ -21,6 +21,9 @@ public class Image implements Observer{
 			this.layerList = layerList;
 		}
 		
+		for(Layer l : this.layerList) {
+			l.addObserver(this);
+		}
 		this.currentImage = this.getRenderImage();
 	}
 	/**
@@ -51,7 +54,7 @@ public class Image implements Observer{
 	/**
 	 * 
 	 * @param layerIndex index of {@link Layer} to find
-	 * @return {@link Layer} at the specificed index
+	 * @return {@link Layer} at the specified index
 	 */
 	public Layer getLayerAt(int layerIndex) {
 		return layerList.get(layerIndex);
@@ -62,5 +65,15 @@ public class Image implements Observer{
 		this.currentImage = this.getRenderImage();
 	}
 	
+	public Pixel getPixelAt(int x, int y) {
+		return currentImage.getPixelAt(x, y);
+	}
 	
+	public int getWidth() {
+		return currentImage.getWidth();
+	}
+	
+	public int getHeight() {
+		return currentImage.getHeight();
+	}
 }

@@ -17,8 +17,7 @@ public class ImageWriter {
 		if(path == null) {
 			throw new IllegalArgumentException("Given path cannot be null");
 		}
-			
-		Layer toWrite = image.getRenderImage();
+		
 		BufferedWriter writer;
 		
 		try {
@@ -27,11 +26,10 @@ public class ImageWriter {
 			throw new IllegalArgumentException("Cannot open file at given path for writing");
 		}
 		
-		Layer renderImage = image.getRenderImage();
 		writer.write("P6");
 		writer.newLine();
-		writer.write(renderedImage = );
+		writer.write(image.getWidth() + " " + image.getHeight());
 		
-		for(int )
+		for(int y = 0; y < image.get)
 	}
 }

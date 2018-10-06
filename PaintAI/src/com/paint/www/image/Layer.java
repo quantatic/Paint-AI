@@ -41,6 +41,7 @@ public class Layer extends Observable implements Observer{
 		for(int x = 0; x < width; x++) {
 			for(int y = 0; y < height; y++) {
 				this.canvas[x][y] = new Pixel();
+				this.canvas[x][y].addObserver(this);
 			}
 		}
 	}

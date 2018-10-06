@@ -6,6 +6,7 @@ import java.io.IOException;
 
 import com.paint.www.image.Image;
 import com.paint.www.image.Layer;
+import com.paint.www.image.LayerEffectsFactory;
 import com.paint.www.image.Pixel;
 
 /**
@@ -64,6 +65,7 @@ public class ImageWriter {
 	public static void main(String[] args) {
 		Image img = new Image(400, 400);
 		
+		Layer layer0 = LayerEffectsFactory.createFullGradient(400, 400, new Pixel(255,0,0,0), new Pixel(0,255,0,0), new Pixel(0,0,255,0), new Pixel(127,127,0,0), 200);
 		Layer layer1 = new Layer(400, 400, 0);
 		Layer layer2 = new Layer(400, 400, 0);
 		Layer layer3 = new Layer(400, 400, 0);
@@ -92,6 +94,7 @@ public class ImageWriter {
 			}
 		}
 		
+		img.addLayer(layer0);
 		img.addLayer(layer1);
 		img.addLayer(layer2);
 		img.addLayer(layer3);

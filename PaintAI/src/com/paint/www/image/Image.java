@@ -17,7 +17,7 @@ public class Image implements Observer{
 	
 	public Image(int width, int height) {
 		this.layerList = new ArrayList<Layer>();
-		this.layerList.add(new Layer(width, height));
+		this.layerList.add(new Layer(width, height, 255));
 		this.currentImage = this.getRenderImage();
 	}
 	/**
@@ -56,7 +56,7 @@ public class Image implements Observer{
 	 * @return {@link Layer} merged Layer
 	 */
 	private Layer getRenderImage() {
-		Layer finalLayer = new Layer(0, 0);
+		Layer finalLayer = new Layer(0, 0, 0);
 		for(Layer currentLayer : layerList) {
 			finalLayer = finalLayer.mergeOver(currentLayer);
 		}

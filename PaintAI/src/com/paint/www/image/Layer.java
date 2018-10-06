@@ -18,17 +18,8 @@ public class Layer extends Observable implements Observer{
 	private final int height;
 	
 	/** The 2d array of {@link Pixel}s that is this layer. */
-	private Pixel[][] canvas; //access as 
-	
-	/**
-	 * Creates a new Layer from a given width and height, and initializes it with {@link Pixel}s.
-	 * @param width the width of {@link Pixel}s in this layer.
-	 * @param height the height of {@link Pixel}s in this layer.
-	 * @throws IllegalArgumentException if the given width or height is an illegal value.
-	 */
-	public Layer(int width, int height) {
-		this(width, height, 0);
-	}
+	private Pixel[][] canvas; //access as [x][y]
+
 	/**
 	 * Creates a new Layer from a given width and height, and initializes it with {@link Pixel}s.
 	 * @param width the width of {@link Pixel}s in this layer.
@@ -57,13 +48,6 @@ public class Layer extends Observable implements Observer{
 		}
 	}
 	
-	/**
-	 * Constructs an empty layer.
-	 */
-	public Layer() {
-		this(0, 0);
-	}
-	
 	public int getWidth() {
 		return this.width;
 	}
@@ -87,7 +71,7 @@ public class Layer extends Observable implements Observer{
 		
 		int newWidth = Math.max(getWidth(), lowerLayer.getWidth());
 		int newHeight = Math.max(getHeight(), lowerLayer.getHeight());
-		Layer newLayer = new Layer(newWidth, newHeight);
+		Layer newLayer = new Layer(newWidth, newHeight, 0);
 		Pixel lowerPixel, upperPixel, mergedPixel;
 		for(int x = 0; x < newLayer.getWidth(); x++) {
 			for(int y = 0; y < newLayer.getHeight(); y++) {

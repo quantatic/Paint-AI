@@ -64,9 +64,9 @@ public class ImageWriter {
 	public static void main(String[] args) {
 		Image img = new Image(400, 400);
 		
-		Layer layer1 = new Layer(400, 400);
-		Layer layer2 = new Layer(400, 400);
-		Layer layer3 = new Layer(400, 400);
+		Layer layer1 = new Layer(400, 400, 0);
+		Layer layer2 = new Layer(400, 400, 0);
+		Layer layer3 = new Layer(400, 400, 0);
 		
 		for(int y = 100; y < 200; y++) {
 			for(int x = 100; x < 200; x++) {

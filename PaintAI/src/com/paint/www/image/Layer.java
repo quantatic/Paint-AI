@@ -23,11 +23,11 @@ public class Layer {
 	 * @throws IllegalArgumentException if the given width or height is an illegal value.
 	 */
 	public Layer(int width, int height) {
-		if(width <= 0) {
+		if(width < 0) {
 			throw new IllegalArgumentException("Width cannot be less than or equal to 0");
 		}
 		
-		if(height <= 0) {
+		if(height < 0) {
 			throw new IllegalArgumentException("Height cannot be less than or equal to 0");
 		}
 		
@@ -40,6 +40,13 @@ public class Layer {
 				this.canvas[x][y] = new Pixel();
 			}
 		}
+	}
+	
+	/**
+	 * Constructs an empty layer.
+	 */
+	public Layer() {
+		this(0, 0);
 	}
 	
 	public int getWidth() {

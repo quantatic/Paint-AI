@@ -6,6 +6,7 @@ public class Pixel {
 	public Pixel() {
 		this(0, 0, 0, 0);
 	}
+	
 	public Pixel(int red, int green, int blue, int alpha) {
 		setRed(red);
 		setGreen(green);
@@ -42,15 +43,18 @@ public class Pixel {
 	}
 	
 	public int getRed() {
-		return   ((colorValues >> 24) & 0xFF);
+		return (colorValues >> 24) & 0xFF;
 	}
+	
 	public int getGreen() {
-		return  ((colorValues >> 16) & 0xFF);
+		return (colorValues >> 16) & 0xFF;
 	}
+	
 	public int getBlue() {
-		return  ((colorValues >> 8) & 0xFF);
+		return  (colorValues >> 8) & 0xFF;
 	}
+	
 	public int getAlpha() {
-		return  (colorValues & 0xFF);
+		return colorValues & 0xFF;
 	}
 }

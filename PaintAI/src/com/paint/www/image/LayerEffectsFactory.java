@@ -44,6 +44,9 @@ public class LayerEffectsFactory {
 	 * @return {@link Layer} {@link Layer} with new gradient changes
 	 */
 	public static Layer createFullGradient(int width, int height, Pixel upperLeft, Pixel upperRight, Pixel lowerRight, Pixel lowerLeft, int alpha ) {
+		if(upperLeft == null || upperRight == null || lowerLeft == null || lowerRight == null) {
+			throw new IllegalArgumentException("No null pixels");
+		}
 		Layer gradient = new Layer(width, height);
 		Pixel newPixel, leftPixel, rightPixel;
 		for(int x = 0; x < width; x++) {

@@ -11,11 +11,12 @@ import java.util.Random;
 import javax.swing.JPanel;
 import javax.swing.SwingWorker;
 
+import com.paint.www.image.BoundingBox;
 import com.paint.www.image.Image;
 import com.paint.www.image.Layer;
 import com.paint.www.image.LayerEffectsFactory;
 import com.paint.www.image.Pixel;
-import com.paint.www.image.ToolBox;
+import com.paint.www.tools.ToolBox;
 
 public class PaintPanel extends JPanel{
 	
@@ -73,8 +74,11 @@ public class PaintPanel extends JPanel{
 				
 				@Override
 				protected Object doInBackground() throws Exception {
-					ToolBox.useEquippedTool(e.getX(), e.getY(), drawLayer);
-					updatePanelImage(e.getX() - 25, e.getY() - 25, 50, 50);
+					int mouseX = e.getX();
+					int mouseY = e.getY();
+					ToolBox.useEquippedTool(mouseX, mouseY, drawLayer);
+					BoundingBox toUpdate = ToolBox.getEquippedTool().getBoundingBox(mouseX, mouseY);
+					updatePanelImage(toUpdate.getX(), toUpdate.getY(), toUpdate.getWidth(), toUpdate.getHeight());
 					repaint();
 					return null;
 				}

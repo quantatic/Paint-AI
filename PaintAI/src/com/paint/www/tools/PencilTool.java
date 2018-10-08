@@ -1,11 +1,15 @@
-package com.paint.www.image;
+package com.paint.www.tools;
+
+import com.paint.www.image.BoundingBox;
+import com.paint.www.image.Layer;
+import com.paint.www.image.Pixel;
+
 /**
  * Represents a {@link Tool} that is a Pencil, drawing in a circle.
  * @author Itai Rivkin-Fish
  * @version 10/8/18
  */
 public class PencilTool extends Tool{
-	private final double DROPRATIO = 0.8;
 	private double radius;
 	private Pixel drawPixel;
 	
@@ -38,6 +42,12 @@ public class PencilTool extends Tool{
 				}
 			}
 		}
+	}
+	@Override
+	public BoundingBox getBoundingBox(int mouseX, int mouseY) {
+		int x = (int) Math.max(mouseX - radius, 0);
+		int y = (int) Math.max(mouseY - radius, 0);
+		return new BoundingBox(x, y, (int) (2*radius), (int) (2*radius));
 	}
 
 }

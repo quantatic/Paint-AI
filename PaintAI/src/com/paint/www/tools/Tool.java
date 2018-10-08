@@ -21,6 +21,7 @@ public abstract class Tool {
 	 */
 	public abstract BoundingBox getBoundingBox(int mouseX, int mouseY);
 	
+
 	/**
 	 * Gets a {@link Shape} that represents this tool's cursor with the given mouse x/y.
 	 * @param mouseX the mouse's x position to create this cursor at.

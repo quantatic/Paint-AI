@@ -12,7 +12,7 @@ import com.paint.www.image.Pixel;
  * @author Itai Rivkin-Fish
  * @version 10/8/18
  */
-public class EraseTool extends Tool{
+public class EraseTool extends CircleTool{
 	private double radius;
 	
 	public EraseTool(double radius) {

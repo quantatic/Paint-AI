@@ -54,6 +54,7 @@ public class PaintPanel extends JPanel{
 		g2d.drawImage(panelImage, 0, 0, this);
 		g2d.setColor(Color.BLACK);
 		
+
 		if(ToolBox.getEquippedTool() != null) { //if we have an equipped tool at all
 			Shape cursor = ToolBox.getEquippedTool().getCursor(mouseX, mouseY);
 			g2d.draw(cursor);

@@ -16,19 +16,14 @@ public class Image{
 		this.layerList = new ArrayList<Layer>();
 	
 		Layer bottomLayer = new Layer(width, height);
-		boolean isWhite = true;
-		boolean lastRow = true;
 		for(int y = 0; y < bottomLayer.getHeight(); y++) {
 			for(int x = 0; x < bottomLayer.getWidth(); x++) {
-				if(isWhite) {
+				if(((x / BACKGROUND_CHECKERBOARD_SQUARE_SIZE) + (y / BACKGROUND_CHECKERBOARD_SQUARE_SIZE)) % 2 == 0) {
 					bottomLayer.getPixelAt(x, y).becomeCopyOf(BACKGROUND_CHECKERBOARD_WHITE_COLOR);
 				} else {
 					bottomLayer.getPixelAt(x, y).becomeCopyOf(BACKGROUND_CHECKERBOARD_GRAY_COLOR);
 				}
-				isWhite = !isWhite;
 			}
-			lastRow = !lastRow;
-			isWhite = lastRow;
 		}
 		
 		this.layerList.add(bottomLayer);

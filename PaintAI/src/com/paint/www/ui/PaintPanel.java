@@ -5,9 +5,6 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Shape;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
@@ -23,6 +20,7 @@ import com.paint.www.image.Image;
 import com.paint.www.image.Layer;
 import com.paint.www.image.LayerEffectsFactory;
 import com.paint.www.image.Pixel;
+import com.paint.www.io.ImageReader;
 import com.paint.www.tools.EraseTool;
 import com.paint.www.tools.PencilTool;
 import com.paint.www.tools.ToolBox;
@@ -38,7 +36,9 @@ public class PaintPanel extends JPanel{
 	
 	public PaintPanel(int width, int height) {
 		image = new Image(width, height);
-		drawLayer = LayerEffectsFactory.createVerticalGradient(width, height, new Pixel(255, 127, 0, 255), new Pixel(0, 127, 255, 255), 255);
+		
+		drawLayer = ImageReader.bufferedImageToLayer(ImageReader.readImage("out.png"));
+		//drawLayer = LayerEffectsFactory.createVerticalGradient(width, height, new Pixel(255, 127, 0, 255), new Pixel(0, 127, 255, 255), 255);
 		panelImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 		
 		//drawLayer = new Layer(width, height);
@@ -120,6 +120,4 @@ public class PaintPanel extends JPanel{
 			repaint();
 		}
 	}
-	
-	
 }

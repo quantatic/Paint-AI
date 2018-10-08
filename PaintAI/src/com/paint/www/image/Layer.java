@@ -55,4 +55,16 @@ public class Layer{
 		return this.canvas[x][y];
 	}
 	
+	public void blendSquareAt(int originX, int originY, int width, int height, int red, int green, int blue, int alpha) {
+		Pixel squarePixel = new Pixel(red, green, blue, alpha);
+		for(int y = originY; y < originY + height; y++) {
+			for(int x = originX; x < originX + width; x++) {
+				if(x >= 0 && y >= 0 && x < getWidth() && y < getHeight()) {
+					Pixel currPixel = getPixelAt(x, y);
+					Pixel newPixel = squarePixel.blendOver(currPixel);
+					currPixel.becomeCopyOf(newPixel);
+				}
+			}
+		}
+	}
 }

@@ -1,4 +1,7 @@
-package com.paint.www.image;
+package com.paint.www.tools;
+
+import com.paint.www.image.Layer;
+
 /**
  * Represents a ToolBox, which holds an equipped {@link Tool}.
  * @author Itai Rivkin-Fish

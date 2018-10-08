@@ -15,7 +15,7 @@ import com.paint.www.image.Image;
 import com.paint.www.image.Layer;
 import com.paint.www.image.LayerEffectsFactory;
 import com.paint.www.image.Pixel;
-import com.paint.www.image.ToolBox;
+import com.paint.www.tools.ToolBox;
 
 public class PaintPanel extends JPanel{
 	

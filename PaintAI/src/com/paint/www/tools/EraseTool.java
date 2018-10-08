@@ -1,4 +1,9 @@
-package com.paint.www.image;
+package com.paint.www.tools;
+
+import com.paint.www.image.BoundingBox;
+import com.paint.www.image.Layer;
+import com.paint.www.image.Pixel;
+
 /**
  * Represents a {@link Tool} that is a Pencil, drawing in a circle.
  * @author Itai Rivkin-Fish

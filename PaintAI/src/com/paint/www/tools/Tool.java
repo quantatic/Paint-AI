@@ -1,4 +1,7 @@
-package com.paint.www.image;
+package com.paint.www.tools;
+
+import com.paint.www.image.BoundingBox;
+import com.paint.www.image.Layer;
 
 public abstract class Tool {
 	

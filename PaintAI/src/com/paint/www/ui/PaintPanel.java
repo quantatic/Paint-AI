@@ -9,6 +9,7 @@ import java.awt.image.BufferedImage;
 import java.util.Random;
 
 import javax.swing.JPanel;
+import javax.swing.SwingWorker;
 
 import com.paint.www.image.BoundingBox;
 import com.paint.www.image.Image;
@@ -66,12 +67,21 @@ public class PaintPanel extends JPanel{
 		
 		@Override
 		public void mouseDragged(MouseEvent e) {
-			int mouseX = e.getX();
-			int mouseY = e.getY();
-			ToolBox.useEquippedTool(mouseX, mouseY, drawLayer);
-			BoundingBox toUpdate = ToolBox.getEquippedTool().getBoundingBox(mouseX, mouseY);
-			updatePanelImage(toUpdate.getX(), toUpdate.getY(), toUpdate.getWidth(), toUpdate.getHeight());
-			repaint();
+			//drawLayer.blendSquareAt(e.getX() - 25, e.getY() - 25, 50, 50, currR, currG, currB, currA);
+			
+			new SwingWorker<Object, Object>() {
+				
+				@Override
+				protected Object doInBackground() throws Exception {
+					int mouseX = e.getX();
+					int mouseY = e.getY();
+					ToolBox.useEquippedTool(mouseX, mouseY, drawLayer);
+					BoundingBox toUpdate = ToolBox.getEquippedTool().getBoundingBox(mouseX, mouseY);
+					updatePanelImage(toUpdate.getX(), toUpdate.getY(), toUpdate.getWidth(), toUpdate.getHeight());
+					repaint();
+					return null;
+				}
+			}.execute();
 		}
 		
 

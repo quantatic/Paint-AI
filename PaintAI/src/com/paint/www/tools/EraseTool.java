@@ -26,7 +26,6 @@ public class EraseTool extends Tool{
 		
 		for(int x = (int) -radius; x <= radius; x++) {
 			for(int y = (int) -radius; y <= radius; y++) {
-				
 				newX = mouseX + x;
 				newY = mouseY + y;
 				

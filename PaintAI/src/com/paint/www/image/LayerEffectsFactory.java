@@ -47,7 +47,7 @@ public class LayerEffectsFactory {
 		if(upperLeft == null || upperRight == null || lowerLeft == null || lowerRight == null) {
 			throw new IllegalArgumentException("No null pixels");
 		}
-		Layer gradient = new Layer(width, height, alpha);
+		Layer gradient = new Layer(width, height);
 		Pixel newPixel, leftPixel, rightPixel;
 		for(int x = 0; x < width; x++) {
 			for(int y = 0; y < height; y++) {

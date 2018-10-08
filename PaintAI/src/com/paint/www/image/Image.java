@@ -2,30 +2,40 @@ package com.paint.www.image;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Observable;
-import java.util.Observer;
 
-public class Image implements Observer{
+public class Image{
 	
-	private List<Layer> layerList;
-	private Layer currentImage;
+	private List<Layer> layerList; //upper-most layer is at end of list
+	private int width, height;
 	
-	
-	public Image() {
-		this(0,0);
-	}
+	private static final int BACKGROUND_CHECKERBOARD_SQUARE_SIZE = 5;
+	private static final Pixel BACKGROUND_CHECKERBOARD_WHITE_COLOR = new Pixel(255, 255, 255, 255);
+	private static final Pixel BACKGROUND_CHECKERBOARD_GRAY_COLOR = new Pixel(200, 200, 200, 255);
 	
 	public Image(int width, int height) {
 		this.layerList = new ArrayList<Layer>();
-		this.layerList.add(new Layer(width, height, 255));
-		this.currentImage = this.getRenderImage();
+	
+		Layer bottomLayer = new Layer(width, height);
+		for(int y = 0; y < bottomLayer.getHeight(); y++) {
+			for(int x = 0; x < bottomLayer.getWidth(); x++) {
+				if(((x / BACKGROUND_CHECKERBOARD_SQUARE_SIZE) + (y / BACKGROUND_CHECKERBOARD_SQUARE_SIZE)) % 2 == 0) {
+					bottomLayer.getPixelAt(x, y).becomeCopyOf(BACKGROUND_CHECKERBOARD_WHITE_COLOR);
+				} else {
+					bottomLayer.getPixelAt(x, y).becomeCopyOf(BACKGROUND_CHECKERBOARD_GRAY_COLOR);
+				}
+			}
+		}
+		
+		this.layerList.add(bottomLayer);
+		this.width = width;
+		this.height = height;
 	}
 	/**
 	 * Adds a {@link Layer} as the upper-most {@link Layer}
 	 * @param addLayer {@link Layer} to add
 	 */
 	public void addLayer(Layer addLayer) {
-		addLayerAt(0, addLayer);
+		addLayerAt(getNumberLayers(), addLayer);
 	}
 	/**
 	 * Adds a {@link Layer} at the specified index
@@ -37,7 +47,6 @@ public class Image implements Observer{
 			throw new IllegalArgumentException("Index is bigger than the layer size");
 		}
 		layerList.add(index, addLayer);
-		this.currentImage = this.getRenderImage();
 	}
 	/**
 	 * This function removes a {@link Layer} at a specific index
@@ -48,34 +57,8 @@ public class Image implements Observer{
 			throw new IllegalArgumentException("Index is bigger than the layer size");
 		}
 		layerList.remove(index);
-		this.currentImage = this.getRenderImage();
 	}
 	
-	/**
-	 * This function merges all the layers from the top down in order to create a single layer that is what will be displayed
-	 * @return {@link Layer} merged Layer
-	 */
-	private Layer getRenderImage() {
-		Layer finalLayer = new Layer(0, 0, 0);
-		for(Layer currentLayer : layerList) {
-			finalLayer = finalLayer.mergeOver(currentLayer);
-		}
-		return finalLayer;
-	}
-	/**
-	 * 
-	 * @return {@link Layer} at the top
-	 */
-	public Layer getTopLayer() {
-		return getLayerAt(0);
-	}
-	/**
-	 * 
-	 * @return {@link Layer} at the bottom 
-	 */
-	public Layer getBottomLayer() {
-		return getLayerAt(layerList.size() - 1);
-	}
 	/**
 	 * 
 	 * @param layerIndex index of {@link Layer} to find
@@ -84,21 +67,35 @@ public class Image implements Observer{
 	public Layer getLayerAt(int layerIndex) {
 		return layerList.get(layerIndex);
 	}
-
-	@Override
-	public void update(Observable arg0, Object arg1) {
-		this.currentImage = this.getRenderImage();
+	
+	public int getNumberLayers() {
+		return layerList.size();
 	}
+
 	
 	public Pixel getPixelAt(int x, int y) {
-		return currentImage.getPixelAt(x, y);
+		if(x < 0 || x >= getWidth() || y < 0 || y >= getHeight()) {
+			throw new IllegalArgumentException("Cannot get pixel at (" + x + ", " + y + ")"
+					+ " in Image with dimensions " + getWidth() + "x" + getHeight());
+		}
+		
+		Pixel resultPixel = new Pixel();
+		for(Layer thisLayer : layerList) {
+			if(x < thisLayer.getWidth() && y < thisLayer.getHeight()) {
+				
+				Pixel layerPixel = thisLayer.getPixelAt(x, y);
+				resultPixel = layerPixel.blendOver(resultPixel);
+			}
+		}
+		
+		return resultPixel;
 	}
 	
 	public int getWidth() {
-		return currentImage.getWidth();
+		return width;
 	}
 	
 	public int getHeight() {
-		return currentImage.getHeight();
+		return height;
 	}
 }

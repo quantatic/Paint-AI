@@ -1,7 +1,5 @@
 package com.paint.www.image;
 
-import java.util.Observable;
-
 /**
  * This class holds data on individual pixels, storing their RGB and Alpha
  * @author Itai Rivkin-Fish
@@ -9,7 +7,7 @@ import java.util.Observable;
  * @version 10/6/18
  * 
  */
-public class Pixel extends Observable{
+public class Pixel{
 	/* colorValues is a single int that holds the Red,Green,Blue and Alpha of the Pixel
 	 * Red		Green	 Blue	  Alpha	
 	 * RRRRRRRR_GGGGGGGG_BBBBBBBB_AAAAAAAA
@@ -19,7 +17,7 @@ public class Pixel extends Observable{
 	private int colorValues;
 	
 	public Pixel() {
-		this(255, 255, 255, 0); //Create white pixel by default
+		this(0, 0, 0, 0);
 	}
 	
 	@Override
@@ -165,7 +163,6 @@ public class Pixel extends Observable{
 		setBlue(toCopy.getBlue());
 		setGreen(toCopy.getGreen());
 		setAlpha(toCopy.getAlpha());
-		notifyObservers();
 	}
 	
 	@Override

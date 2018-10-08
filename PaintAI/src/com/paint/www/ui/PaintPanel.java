@@ -6,8 +6,10 @@ import java.awt.Graphics2D;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
+import java.util.Random;
 
 import javax.swing.JPanel;
+import javax.swing.SwingWorker;
 
 import com.paint.www.image.Image;
 import com.paint.www.image.Layer;
@@ -18,6 +20,7 @@ public class PaintPanel extends JPanel{
 	
 	private final Image image;
 	private final Layer drawLayer;
+	private int currR = 127, currG = 127, currB = 127, currA = 127;
 	
 	public PaintPanel(int width, int height) {
 		image = new Image(width, height);
@@ -25,7 +28,9 @@ public class PaintPanel extends JPanel{
 		image.addLayer(drawLayer);
 		
 		setPreferredSize(new Dimension(width, height));
-		addMouseMotionListener(new DrawListener());
+		DrawListener d = new DrawListener();
+		addMouseMotionListener(d);
+		addMouseListener(d);
 		
 	}
 	
@@ -42,7 +47,26 @@ public class PaintPanel extends JPanel{
 		
 		@Override
 		public void mouseDragged(MouseEvent e) {
-			drawLayer.blendSquareAt(e.getX() - 25, e.getY() - 25, 50, 50, 127, 127, 127, 127);
+			new SwingWorker<Object, Object>() {
+
+				@Override
+				protected Object doInBackground() throws Exception {
+					drawLayer.blendSquareAt(e.getX() - 25, e.getY() - 25, 50, 50, currR, currG, currB, currA);
+					return null;
+				}
+			}.execute();
+		}
+
+		/**
+		 * @param arg0
+		 */
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			Random r = new Random();
+			currR = r.nextInt(256);
+			currG = r.nextInt(256);
+			currB = r.nextInt(256);
+			currA = r.nextInt(127);
 			repaint();
 		}
 	}

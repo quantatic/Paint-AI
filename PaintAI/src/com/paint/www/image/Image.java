@@ -2,7 +2,12 @@ package com.paint.www.image;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * Represents an Image, consisting of mutliple {@link Layer}s.
+ * @author Aidan Beggs
+ * @author Itai Rivkin-Fish
+ * @version 10/7/18
+ */
 public class Image{
 	
 	private List<Layer> layerList; //upper-most layer is at end of list

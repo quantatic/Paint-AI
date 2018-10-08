@@ -38,7 +38,7 @@ public class PaintPanel extends JPanel{
 		
 		//drawLayer = new Layer(width, height);
 		image.addLayer(drawLayer);
-		updatePanelImage(0, 0, width, height);
+		updatePanelImage(new BoundingBox(0, 0, width, height));
 		
 		setPreferredSize(new Dimension(width, height));
 		DrawListener d = new DrawListener();
@@ -54,13 +54,23 @@ public class PaintPanel extends JPanel{
 		g2d.drawImage(panelImage, 0, 0, this);
 		g2d.setColor(Color.BLACK);
 		
-		if(ToolBox.getEquippedTool() != null) {
+
+		if(ToolBox.getEquippedTool() != null) { //if we have an equipped tool at all
 			Shape cursor = ToolBox.getEquippedTool().getCursor(mouseX, mouseY);
 			g2d.draw(cursor);
 		}
 	}
 	
-	private void updatePanelImage(int x, int y, int width, int height) {
+	/**
+	 * Updates the current {@link BufferedImage} for this Panel, only for a given area.
+	 * @param x the x value of the start of the square representing the area to update.
+	 * @param y the y value of the start of the square representing the area to update.
+	 * @param width
+	 * @param height
+	 */
+	private void updatePanelImage(BoundingBox b) {
+		int x = b.getX(), y = b.getY(), width = b.getWidth(), height = b.getHeight();
+		
 		for(int tmpY = y; tmpY < y + height; tmpY++) {
 			for(int tmpX = x; tmpX < x + height; tmpX++) {
 				if(tmpX >= 0 && tmpX < image.getWidth() && tmpY >= 0 && tmpY < image.getHeight()) {
@@ -87,7 +97,7 @@ public class PaintPanel extends JPanel{
 					int mouseY = e.getY();
 					ToolBox.useEquippedTool(mouseX, mouseY, drawLayer);
 					BoundingBox toUpdate = ToolBox.getEquippedTool().getBoundingBox(mouseX, mouseY);
-					updatePanelImage(toUpdate.getX(), toUpdate.getY(), toUpdate.getWidth(), toUpdate.getHeight());
+					updatePanelImage(toUpdate);
 					repaint();
 					return null;
 				}

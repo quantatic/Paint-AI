@@ -67,4 +67,8 @@ public class Layer{
 			}
 		}
 	}
+	
+	public boolean isLegalCoordinate(int x,int y) {
+		return x >= 0 && x < getWidth() && y >= 0 && y < getHeight();
+	}
 }

@@ -28,7 +28,7 @@ public class PaintApp extends JFrame implements Runnable{
 		setLocationRelativeTo(null);
 		
 		setVisible(true);
-		//setFocusable(true);
+		setFocusable(true);
 		
 		KeyListener s = new SelectorListener();
 		addKeyListener(s);

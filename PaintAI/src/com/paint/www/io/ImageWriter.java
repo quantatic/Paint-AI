@@ -103,14 +103,14 @@ public class ImageWriter {
 	public static void main(String[] args) {
 		Image img = new Image(400, 400);
 		
-		Layer layer1 = new Layer(400, 400);
+		Layer layer1 = new Layer(200, 200);
 		Layer layer2 = new Layer(400, 400);
 		Layer layer3 = new Layer(400, 400);
 		
 		for(int y = 100; y < 200; y++) {
 			for(int x = 100; x < 200; x++) {
 				Pixel thisPixel = layer1.getPixelAt(x, y);
-				Pixel overPixel = new Pixel(255, 0, 0, 255);
+				Pixel overPixel = new Pixel(255, 0, 0, 200);
 				thisPixel.becomeCopyOf(overPixel.blendOver(thisPixel));
 			}
 		}
@@ -126,7 +126,7 @@ public class ImageWriter {
 		for(int y = 200; y < 300; y++) {
 			for(int x = 200; x < 300; x++) {
 				Pixel thisPixel = layer3.getPixelAt(x, y);
-				Pixel overPixel = new Pixel(0, 0, 255, 255);
+				Pixel overPixel = new Pixel(0, 0, 255, 50);
 				thisPixel.becomeCopyOf(overPixel.blendOver(thisPixel));
 			}
 		}

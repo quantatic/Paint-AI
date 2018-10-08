@@ -16,6 +16,17 @@ public class Pixel{
 	 */
 	private int colorValues;
 	
+	public Pixel(int red, int green, int blue, int alpha) {
+		setRed(red);
+		setGreen(green);
+		setBlue(blue);
+		setAlpha(alpha);
+	}
+	
+	public Pixel(int red, int green, int blue) {
+		this(red, green, blue, 255);
+	}
+	
 	public Pixel() {
 		this(0, 0, 0, 0);
 	}
@@ -42,12 +53,7 @@ public class Pixel{
 		return true;
 	}
 
-	public Pixel(int red, int green, int blue, int alpha) {
-		setRed(red);
-		setGreen(green);
-		setBlue(blue);
-		setAlpha(alpha);
-	}
+	
 	/**
 	 * Setter for the Alpha value
 	 * @param alpha value between 0-255 to set the alpha as

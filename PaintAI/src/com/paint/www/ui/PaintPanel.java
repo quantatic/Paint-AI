@@ -5,6 +5,9 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Shape;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
@@ -20,6 +23,8 @@ import com.paint.www.image.Image;
 import com.paint.www.image.Layer;
 import com.paint.www.image.LayerEffectsFactory;
 import com.paint.www.image.Pixel;
+import com.paint.www.tools.EraseTool;
+import com.paint.www.tools.PencilTool;
 import com.paint.www.tools.ToolBox;
 
 public class PaintPanel extends JPanel{
@@ -43,7 +48,8 @@ public class PaintPanel extends JPanel{
 		setPreferredSize(new Dimension(width, height));
 		DrawListener d = new DrawListener();
 		addMouseMotionListener(d);
-		addMouseListener(d);
+		
+		setFocusable(true);
 	}
 	
 	@Override
@@ -114,4 +120,6 @@ public class PaintPanel extends JPanel{
 			repaint();
 		}
 	}
+	
+	
 }

@@ -1,10 +1,14 @@
 package com.paint.www.ui;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Shape;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
+import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
 import java.util.Random;
 
@@ -25,10 +29,11 @@ public class PaintPanel extends JPanel{
 	private final Image image;
 	private final Layer drawLayer;
 	private BufferedImage panelImage;
+	private int mouseX, mouseY;
 	
 	public PaintPanel(int width, int height) {
 		image = new Image(width, height);
-		drawLayer = LayerEffectsFactory.createVerticalGradient(width, height, new Pixel(255, 127, 0 ,255), new Pixel(0, 127, 255, 255), 255);
+		drawLayer = LayerEffectsFactory.createVerticalGradient(width, height, new Pixel(255, 127, 0, 255), new Pixel(0, 127, 255, 255), 255);
 		panelImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 		
 		//drawLayer = new Layer(width, height);
@@ -47,6 +52,13 @@ public class PaintPanel extends JPanel{
 		Graphics2D g2d = (Graphics2D)g;
 
 		g2d.drawImage(panelImage, 0, 0, this);
+		g2d.setColor(Color.BLACK);
+		
+		if(ToolBox.getEquippedTool() != null) {
+			BoundingBox cursorBox = ToolBox.getEquippedTool().getBoundingBox(mouseX, mouseY);
+			Shape cursor = new Ellipse2D.Double(cursorBox.getX(), cursorBox.getY(), cursorBox.getWidth(), cursorBox.getHeight());
+			g2d.draw(cursor);
+		}
 	}
 	
 	private void updatePanelImage(int x, int y, int width, int height) {
@@ -81,8 +93,16 @@ public class PaintPanel extends JPanel{
 					return null;
 				}
 			}.execute();
+			
+			mouseX = e.getX();
+			mouseY = e.getY();
 		}
 		
-
+		@Override
+		public void mouseMoved(MouseEvent e) {
+			mouseX = e.getX();
+			mouseY = e.getY();
+			repaint();
+		}
 	}
 }

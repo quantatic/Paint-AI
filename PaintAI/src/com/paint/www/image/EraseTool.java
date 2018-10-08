@@ -4,19 +4,16 @@ package com.paint.www.image;
  * @author Itai Rivkin-Fish
  * @version 10/8/18
  */
-public class PencilTool extends Tool{
-	private final double DROPRATIO = 0.8;
+public class EraseTool extends Tool{
 	private double radius;
-	private Pixel drawPixel;
 	
-	public PencilTool(Pixel drawPixel, double radius) {
-		this.drawPixel = drawPixel;
+	public EraseTool(double radius) {
 		this.radius = radius;
 	}
 	@Override
 	public void useTool(int mouseX, int mouseY, Layer layer) {
 		int newX, newY;
-		Pixel alteredPixel;
+		Pixel alteredPixel, currentPixel;
 		boolean isWithinRadius;
 		double distanceSquared;
 		double radiusSquared = Math.pow(radius, 2);
@@ -32,9 +29,10 @@ public class PencilTool extends Tool{
 				isWithinRadius =  distanceSquared <= radiusSquared;
 				
 				if(isWithinRadius && layer.isLegalCoordinate(newX, newY)) {
-					newAlpha = (int) (drawPixel.getAlpha() * (1 - (distanceSquared / radiusSquared)));
-					alteredPixel = new Pixel(drawPixel.getRed(), drawPixel.getGreen(), drawPixel.getBlue(), newAlpha);
-					layer.getPixelAt(newX, newY).becomeCopyOf(alteredPixel.blendOver(layer.getPixelAt(newX, newY)));
+					currentPixel = layer.getPixelAt(newX, newY);
+					newAlpha = (int) (currentPixel.getAlpha() * ((distanceSquared / radiusSquared)));
+					alteredPixel = new Pixel(currentPixel.getRed(), currentPixel.getGreen(), currentPixel.getBlue(), newAlpha);
+					layer.getPixelAt(newX, newY).becomeCopyOf(alteredPixel);
 				}
 			}
 		}

@@ -67,7 +67,6 @@ public class PaintPanel extends JPanel{
 		
 		@Override
 		public void mouseDragged(MouseEvent e) {
-			//drawLayer.blendSquareAt(e.getX() - 25, e.getY() - 25, 50, 50, currR, currG, currB, currA);
 			
 			new SwingWorker<Object, Object>() {
 				

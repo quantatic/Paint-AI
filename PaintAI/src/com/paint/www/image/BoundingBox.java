@@ -1,5 +1,11 @@
 package com.paint.www.image;
 
+/**
+ * This class represents a 'bounding box', used to show an area
+ * @author Itai Rivkin-Fish
+ * @version 10/8/18
+ * 
+ */
 public class BoundingBox {
 	private int x, y, width, height;
 	

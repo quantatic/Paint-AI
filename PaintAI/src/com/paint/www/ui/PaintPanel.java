@@ -21,6 +21,8 @@ import com.paint.www.image.Layer;
 import com.paint.www.image.LayerEffectsFactory;
 import com.paint.www.image.Pixel;
 import com.paint.www.io.ImageReader;
+import com.paint.www.tools.EraseTool;
+import com.paint.www.tools.PencilTool;
 import com.paint.www.tools.ToolBox;
 
 public class PaintPanel extends JPanel{
@@ -46,7 +48,8 @@ public class PaintPanel extends JPanel{
 		setPreferredSize(new Dimension(width, height));
 		DrawListener d = new DrawListener();
 		addMouseMotionListener(d);
-		addMouseListener(d);
+		
+		setFocusable(true);
 	}
 	
 	@Override

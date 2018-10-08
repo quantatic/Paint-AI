@@ -1,5 +1,7 @@
 package com.paint.www.tools;
 
+import java.awt.Shape;
+
 import com.paint.www.image.BoundingBox;
 import com.paint.www.image.Layer;
 
@@ -18,4 +20,6 @@ public abstract class Tool {
 	 * @return {@link BoundingBox}
 	 */
 	public abstract BoundingBox getBoundingBox(int mouseX, int mouseY);
+	
+	public abstract Shape getCursor(int mouseX, int mouseY);
 }

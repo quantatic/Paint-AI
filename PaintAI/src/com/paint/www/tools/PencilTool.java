@@ -9,7 +9,7 @@ import com.paint.www.image.Pixel;
  * @author Itai Rivkin-Fish
  * @version 10/8/18
  */
-public class PencilTool extends Tool{
+public class PencilTool extends CircleTool{
 	private double radius;
 	private Pixel drawPixel;
 	

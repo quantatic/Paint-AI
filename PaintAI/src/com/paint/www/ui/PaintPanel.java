@@ -55,8 +55,7 @@ public class PaintPanel extends JPanel{
 		g2d.setColor(Color.BLACK);
 		
 		if(ToolBox.getEquippedTool() != null) {
-			BoundingBox cursorBox = ToolBox.getEquippedTool().getBoundingBox(mouseX, mouseY);
-			Shape cursor = new Ellipse2D.Double(cursorBox.getX(), cursorBox.getY(), cursorBox.getWidth(), cursorBox.getHeight());
+			Shape cursor = ToolBox.getEquippedTool().getCursor(mouseX, mouseY);
 			g2d.draw(cursor);
 		}
 	}

@@ -1,8 +1,12 @@
 package com.paint.www.io;
 
+import java.awt.image.BufferedImage;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+
+import javax.imageio.ImageIO;
 
 import com.paint.www.image.Image;
 import com.paint.www.image.Layer;
@@ -12,8 +16,42 @@ import com.paint.www.image.Pixel;
 /**
  * Class with helper methods to enable writing an image to a file.
  * @author Aidan Beggs
+ * @author Itai Rivkin-Fish
  */
 public class ImageWriter {
+	
+	/**
+	 * Attempts to write the given image to the given file as a png image.
+	 * @param image the image to write to the given file.
+	 * @param path the file to write the given image to.
+	 */
+	public static void writePNGImage(Image image, String path) {
+		if(image == null) {
+			throw new IllegalArgumentException("Given image cannot be null");
+		}
+		
+		if(path == null) {
+			throw new IllegalArgumentException("Given path cannot be null");
+		}
+		
+		if(path.lastIndexOf(".") == -1 || !path.substring(path.lastIndexOf(".")).toLowerCase().equals(".png")) {
+			throw new IllegalArgumentException("Given filename must have an extension of .png");
+		}
+		try {
+			BufferedImage bufferedImage = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_ARGB);
+			for(int x = 0; x < image.getWidth(); x++) {
+				for(int y = 0; y < image.getHeight(); y++) {
+					Pixel p = image.getPixelAt(x, y);
+					int pixelAsInt = (p.getAlpha() << 24) | (p.getRed() << 16) | (p.getGreen() << 8) | (p.getBlue());
+					bufferedImage.setRGB(x, y, pixelAsInt);
+				}
+			}
+			File f = new File(path);
+			ImageIO.write(bufferedImage,"png", f);
+		} catch(IOException e) {
+			throw new IllegalArgumentException("Error opening/writing the given file");
+		}
+	}
 	
 	/**
 	 * Attempts to write the given image to the given file.
@@ -99,6 +137,6 @@ public class ImageWriter {
 		img.addLayer(layer2);
 		img.addLayer(layer3);
 		
-		writeImage(img, "out.ppm");
+		writePNGImage(img, "out.png");
 	}
 }

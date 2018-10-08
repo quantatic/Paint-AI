@@ -97,6 +97,7 @@ public class ImageWriter {
 	public static void main(String[] args) {
 		Image img = new Image(400, 400);
 		
+		Layer layer0 = LayerEffectsFactory.createHorizontalGradient(400, 400, new Pixel(255, 0, 0, 190), new Pixel(0, 255, 0, 190), 190);
 		Layer layer1 = new Layer(200, 200);
 		Layer layer2 = new Layer(400, 400);
 		Layer layer3 = new Layer(400, 400);
@@ -124,7 +125,9 @@ public class ImageWriter {
 				thisPixel.becomeCopyOf(overPixel.blendOver(thisPixel));
 			}
 		}
+		layer0 = LayerEffectsFactory.getScaledLayer(layer0, 80, 80);
 		
+		img.addLayer(layer0);
 		img.addLayer(layer1);
 		img.addLayer(layer2);
 		img.addLayer(layer3);

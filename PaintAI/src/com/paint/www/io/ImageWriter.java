@@ -38,7 +38,14 @@ public class ImageWriter {
 			throw new IllegalArgumentException("Given filename must have an extension of .png");
 		}
 		try {
-			BufferedImage bufferedImage = image.getBufferedImage();
+			BufferedImage bufferedImage = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_ARGB);
+			for(int y = 0; y < image.getHeight(); y++) {
+				for(int x = 0; x < image.getWidth(); x++) {
+					Pixel thisPixel = image.getPixelAt(x, y);
+					int thisARGB = (thisPixel.getAlpha() << 24) | (thisPixel.getRed() << 16) | (thisPixel.getGreen() << 8) | (thisPixel.getBlue());
+					bufferedImage.setRGB(x, y, thisARGB);
+				}
+			}
 			
 			File f = new File(path);
 			ImageIO.write(bufferedImage,"png", f);

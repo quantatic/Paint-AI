@@ -104,17 +104,4 @@ public class Image{
 	public int getHeight() {
 		return height;
 	}
-	
-	public BufferedImage getBufferedImage() {
-		BufferedImage resultBufferedImage = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_ARGB);
-		for(int x = 0; x < getWidth(); x++) {
-			for(int y = 0; y < getHeight(); y++) {
-				Pixel p = getPixelAt(x, y);
-				int pixelAsInt = (p.getAlpha() << 24) | (p.getRed() << 16) | (p.getGreen() << 8) | (p.getBlue());
-				resultBufferedImage.setRGB(x, y, pixelAsInt);
-			}
-		}
-		
-		return resultBufferedImage;
-	}
 }

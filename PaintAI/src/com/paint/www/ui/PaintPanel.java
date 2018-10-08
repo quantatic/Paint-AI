@@ -20,6 +20,7 @@ import com.paint.www.image.Image;
 import com.paint.www.image.Layer;
 import com.paint.www.image.LayerEffectsFactory;
 import com.paint.www.image.Pixel;
+import com.paint.www.io.ImageReader;
 import com.paint.www.tools.ToolBox;
 
 public class PaintPanel extends JPanel{
@@ -33,7 +34,9 @@ public class PaintPanel extends JPanel{
 	
 	public PaintPanel(int width, int height) {
 		image = new Image(width, height);
-		drawLayer = LayerEffectsFactory.createVerticalGradient(width, height, new Pixel(255, 127, 0, 255), new Pixel(0, 127, 255, 255), 255);
+		
+		drawLayer = ImageReader.bufferedImageToLayer(ImageReader.readImage("out.png"));
+		//drawLayer = LayerEffectsFactory.createVerticalGradient(width, height, new Pixel(255, 127, 0, 255), new Pixel(0, 127, 255, 255), 255);
 		panelImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 		
 		//drawLayer = new Layer(width, height);

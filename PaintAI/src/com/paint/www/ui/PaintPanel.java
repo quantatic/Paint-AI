@@ -48,9 +48,11 @@ public class PaintPanel extends JPanel{
 	private void updatePanelImage(int x, int y, int width, int height) {
 		for(int tmpY = y; tmpY < y + height; tmpY++) {
 			for(int tmpX = x; tmpX < x + height; tmpX++) {
-				Pixel thisPixel = image.getPixelAt(tmpX, tmpY);
-				int thisARGB = (thisPixel.getAlpha() << 24) | (thisPixel.getRed() << 16) | (thisPixel.getGreen() << 8) | (thisPixel.getBlue());
-				panelImage.setRGB(tmpX, tmpY, thisARGB);
+				if(tmpX >= 0 && tmpX < image.getWidth() && tmpY >= 0 && tmpY < image.getHeight()) {
+					Pixel thisPixel = image.getPixelAt(tmpX, tmpY);
+					int thisARGB = (thisPixel.getAlpha() << 24) | (thisPixel.getRed() << 16) | (thisPixel.getGreen() << 8) | (thisPixel.getBlue());
+					panelImage.setRGB(tmpX, tmpY, thisARGB);
+				}
 			}
 		}
 	}
@@ -62,7 +64,7 @@ public class PaintPanel extends JPanel{
 		@Override
 		public void mouseDragged(MouseEvent e) {
 			drawLayer.blendSquareAt(e.getX() - 25, e.getY() - 25, 50, 50, currR, currG, currB, currA);
-			updatePanelImage(e.getX() - 25, e.getY() - 25, 50, 50);
+			updatePanelImage(e.getX() - 100, e.getY() - 100, 200, 200);
 			repaint();
 		}
 		

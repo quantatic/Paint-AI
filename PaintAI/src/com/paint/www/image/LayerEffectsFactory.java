@@ -8,6 +8,30 @@ package com.paint.www.image;
  */
 public class LayerEffectsFactory {
 	
+	
+	/**
+	 * This function returns a new, scaled {@link Layer} at the input dimensions
+	 * @param l {@link Layer} to scale
+	 * @param newWidth width of new {@link Layer}
+	 * @param newHeight height of new {@link Layer}
+	 * @return {@link Layer} with new size
+	 */
+	public static Layer getScaledLayer(Layer l, int newWidth, int newHeight){
+		Layer scaledLayer = new Layer(newWidth, newHeight);
+		for(int x = 0; x < newWidth; x++){
+			for(int y = 0; y < newHeight; y++){
+				int sourceX = (int) Math.round((double) x / newWidth * l.getWidth());
+				sourceX = Math.min(sourceX, l.getWidth() - 1);
+				
+				int sourceY = (int) Math.round((double) y / newHeight * l.getHeight());
+				sourceY = Math.min(sourceY, l.getHeight() - 1);
+				
+				scaledLayer.getPixelAt(x, y).becomeCopyOf(l.getPixelAt(sourceX, sourceY));
+			}
+		}
+		return scaledLayer;
+	}
+	
 	/**
 	 * This function creates a vertical gradient
 	 * @param width Width of gradient 
@@ -30,7 +54,7 @@ public class LayerEffectsFactory {
 	 * @return {@link Layer} {@link Layer} with new gradient changes
 	 */
 	public static Layer createHorizontalGradient(int width, int height, Pixel leftPixel, Pixel rightPixel, int alpha) {
-		return createFullGradient(width, height, leftPixel, rightPixel, leftPixel, rightPixel, alpha);
+		return createFullGradient(width, height, leftPixel, rightPixel, rightPixel, leftPixel, alpha);
 	}
 	/**
 	 * This function creates a 4 color gradient

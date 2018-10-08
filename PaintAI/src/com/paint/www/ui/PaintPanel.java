@@ -23,7 +23,6 @@ public class PaintPanel extends JPanel{
 	
 	private final Image image;
 	private final Layer drawLayer;
-	private int currR = 50, currG = 100, currB = 150, currA = 255;
 	private BufferedImage panelImage;
 	
 	public PaintPanel(int width, int height) {
@@ -75,13 +74,6 @@ public class PaintPanel extends JPanel{
 			repaint();
 		}
 		
-		@Override
-		public void mouseReleased(MouseEvent e) {
-			Random r = new Random();
-			currR = r.nextInt(256);
-			currG = r.nextInt(256);
-			currB = r.nextInt(256);
-			currA = 50 + r.nextInt(50);
-		}
+
 	}
 }

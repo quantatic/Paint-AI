@@ -52,10 +52,4 @@ public class PencilTool extends CircleTool{
 		int y = (int) Math.max(mouseY - radius, 0);
 		return new BoundingBox(x, y, (int) (2*radius), (int) (2*radius));
 	}
-	
-	@Override
-	public Shape getCursor(int mouseX, int mouseY) {
-		BoundingBox thisBox = getBoundingBox(mouseX, mouseY);
-		return new Ellipse2D.Double(thisBox.getX(), thisBox.getY(), thisBox.getWidth(), thisBox.getHeight());
-	}
 }

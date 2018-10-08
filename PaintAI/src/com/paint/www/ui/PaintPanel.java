@@ -12,13 +12,9 @@ import javax.swing.JPanel;
 
 import com.paint.www.image.Image;
 import com.paint.www.image.Layer;
-<<<<<<< HEAD
 import com.paint.www.image.LayerEffectsFactory;
 import com.paint.www.image.Pixel;
 import com.paint.www.image.ToolBox;
-=======
-import com.paint.www.image.Pixel;
->>>>>>> branch 'dev' of https://github.com/quixotrykd/Paint-AI.git
 
 public class PaintPanel extends JPanel{
 	
@@ -26,21 +22,15 @@ public class PaintPanel extends JPanel{
 	
 	private final Image image;
 	private final Layer drawLayer;
-<<<<<<< HEAD
-=======
 	private int currR = 50, currG = 100, currB = 150, currA = 255;
 	private BufferedImage panelImage;
->>>>>>> branch 'dev' of https://github.com/quixotrykd/Paint-AI.git
 	
 	public PaintPanel(int width, int height) {
 		image = new Image(width, height);
-<<<<<<< HEAD
-		drawLayer = LayerEffectsFactory.createVerticalGradient(width, height, new Pixel(255, 127, 0 ,255), new Pixel(0, 127, 255, 255), 255);//new Layer(width, height);
-=======
+		drawLayer = LayerEffectsFactory.createVerticalGradient(width, height, new Pixel(255, 127, 0 ,255), new Pixel(0, 127, 255, 255), 255);
 		panelImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 		
-		drawLayer = new Layer(width, height);
->>>>>>> branch 'dev' of https://github.com/quixotrykd/Paint-AI.git
+		//drawLayer = new Layer(width, height);
 		image.addLayer(drawLayer);
 		updatePanelImage(0, 0, width, height);
 		
@@ -76,34 +66,19 @@ public class PaintPanel extends JPanel{
 		
 		@Override
 		public void mouseDragged(MouseEvent e) {
-<<<<<<< HEAD
-			new SwingWorker<Object, Object>() {
-
-				@Override
-				protected Object doInBackground() throws Exception {
-					ToolBox.useEquippedTool(e.getX(), e.getY(), drawLayer);
-					//drawLayer.blendSquareAt(e.getX() - 25, e.getY() - 25, 50, 50, currR, currG, currB, currA);
-					return null;
-				}
-			}.execute();
-=======
-			drawLayer.blendSquareAt(e.getX() - 25, e.getY() - 25, 50, 50, currR, currG, currB, currA);
-			updatePanelImage(e.getX() - 100, e.getY() - 100, 200, 200);
+			//drawLayer.blendSquareAt(e.getX() - 25, e.getY() - 25, 50, 50, currR, currG, currB, currA);
+			ToolBox.useEquippedTool(e.getX(), e.getY(), drawLayer);
+			updatePanelImage(e.getX() - 25, e.getY() - 25, 50, 50);
 			repaint();
->>>>>>> branch 'dev' of https://github.com/quixotrykd/Paint-AI.git
 		}
 		
 		@Override
 		public void mouseReleased(MouseEvent e) {
-<<<<<<< HEAD
-			repaint();
-=======
 			Random r = new Random();
 			currR = r.nextInt(256);
 			currG = r.nextInt(256);
 			currB = r.nextInt(256);
 			currA = 50 + r.nextInt(50);
->>>>>>> branch 'dev' of https://github.com/quixotrykd/Paint-AI.git
 		}
 	}
 }

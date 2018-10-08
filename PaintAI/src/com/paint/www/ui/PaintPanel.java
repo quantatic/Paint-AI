@@ -13,6 +13,9 @@ import javax.swing.SwingWorker;
 
 import com.paint.www.image.Image;
 import com.paint.www.image.Layer;
+import com.paint.www.image.LayerEffectsFactory;
+import com.paint.www.image.Pixel;
+import com.paint.www.image.ToolBox;
 
 public class PaintPanel extends JPanel{
 	
@@ -20,11 +23,10 @@ public class PaintPanel extends JPanel{
 	
 	private final Image image;
 	private final Layer drawLayer;
-	private int currR = 127, currG = 127, currB = 127, currA = 127;
 	
 	public PaintPanel(int width, int height) {
 		image = new Image(width, height);
-		drawLayer = new Layer(width, height);
+		drawLayer = LayerEffectsFactory.createVerticalGradient(width, height, new Pixel(255, 127, 0 ,255), new Pixel(0, 127, 255, 255), 255);//new Layer(width, height);
 		image.addLayer(drawLayer);
 		
 		setPreferredSize(new Dimension(width, height));
@@ -51,7 +53,8 @@ public class PaintPanel extends JPanel{
 
 				@Override
 				protected Object doInBackground() throws Exception {
-					drawLayer.blendSquareAt(e.getX() - 25, e.getY() - 25, 50, 50, currR, currG, currB, currA);
+					ToolBox.useEquippedTool(e.getX(), e.getY(), drawLayer);
+					//drawLayer.blendSquareAt(e.getX() - 25, e.getY() - 25, 50, 50, currR, currG, currB, currA);
 					return null;
 				}
 			}.execute();
@@ -62,11 +65,6 @@ public class PaintPanel extends JPanel{
 		 */
 		@Override
 		public void mouseReleased(MouseEvent e) {
-			Random r = new Random();
-			currR = r.nextInt(256);
-			currG = r.nextInt(256);
-			currB = r.nextInt(256);
-			currA = r.nextInt(127);
 			repaint();
 		}
 	}

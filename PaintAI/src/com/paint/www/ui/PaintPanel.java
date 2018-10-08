@@ -37,7 +37,7 @@ public class PaintPanel extends JPanel{
 	public PaintPanel(int width, int height) {
 		image = new Image(width, height);
 		
-		drawLayer = ImageReader.bufferedImageToLayer(ImageReader.readImage("out.png"));
+		drawLayer = ImageReader.loadImageIntoLayer("out.png");
 		//drawLayer = LayerEffectsFactory.createVerticalGradient(width, height, new Pixel(255, 127, 0, 255), new Pixel(0, 127, 255, 255), 255);
 		panelImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 		

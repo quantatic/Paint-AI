@@ -81,7 +81,7 @@ public class PaintPanel extends JPanel{
 			for(int tmpX = x; tmpX < x + height; tmpX++) {
 				if(tmpX >= 0 && tmpX < image.getWidth() && tmpY >= 0 && tmpY < image.getHeight()) {
 					Pixel thisPixel = image.getPixelAt(tmpX, tmpY);
-					int thisARGB = (thisPixel.getAlpha() << 24) | (thisPixel.getRed() << 16) | (thisPixel.getGreen() << 8) | (thisPixel.getBlue());
+					int thisARGB = thisPixel.getARGB();
 					panelImage.setRGB(tmpX, tmpY, thisARGB);
 				}
 			}

@@ -9,8 +9,8 @@ package com.paint.www.image;
  */
 public class Pixel{
 	/* colorValues is a single int that holds the Red,Green,Blue and Alpha of the Pixel
-	 * Red		Green	 Blue	  Alpha	
-	 * RRRRRRRR_GGGGGGGG_BBBBBBBB_AAAAAAAA
+	 * Alpha	Red		 Green	  Blue	  	
+	 * AAAAAAAA_RRRRRRRR_GGGGGGGG_BBBBBBBB
 	 * <- Most significant bit
 	 * 			   Least significant bit->
 	 */
@@ -64,59 +64,62 @@ public class Pixel{
 			throw new IllegalArgumentException("Illegal Alpha Value");
 		}
 		/*
-		 * Red		Green	 Blue	  Alpha	
-		 * 11111111_11111111_11111111_00000000
+		 * Alpha	Red 	 Green    Blue	  
+		 * 00000000_11111111_11111111_11111111
 		 * &
 		 * XXXXXXXX_XXXXXXXX_XXXXXXXX_XXXXXXXX
 		 * =
-		 * XXXXXXXX_XXXXXXXX_XXXXXXXX_00000000
+		 * 00000000_XXXXXXXX_XXXXXXXX_XXXXXXXX
 		 * First we clear the value
 		 * then
-		 * XXXXXXXX_XXXXXXXX_XXXXXXXX_00000000
+		 * 00000000_XXXXXXXX_XXXXXXXX_XXXXXXXX
 		 * |
-		 * 00000000_00000000_00000000_AAAAAAAA
+		 * AAAAAAAA_00000000_00000000_00000000
 		 * =
-		 * XXXXXXXX_XXXXXXXX_XXXXXXXX_AAAAAAAA
+		 * AAAAAAAA_XXXXXXXX_XXXXXXXX_XXXXXXXX
 		 * set the alpha
 		 */
-		colorValues = (colorValues & 0xFF_FF_FF_00) | (alpha);
+		colorValues = (colorValues & 0x00_FF_FF_FF) | (alpha << 24);
 	}
 
 	private void setBlue(int blue) {
 		if(blue < 0 || blue > 255) {
 			throw new IllegalArgumentException("Illegal Blue Value");
 		}
-		colorValues = (colorValues & 0xFF_FF_00_FF) | (blue << 8);
+		colorValues = (colorValues & 0xFF_FF_FF_00) | (blue);
 	}
 
 	private void setGreen(int green) {
 		if(green < 0 || green > 255) {
 			throw new IllegalArgumentException("Illegal Green Value");
 		}
-		colorValues = (colorValues & 0xFF_00_FF_FF) | (green << 16);
+		colorValues = (colorValues & 0xFF_FF_00_FF) | (green << 8);
 	}
 
 	private void setRed(int red) {
 		if(red < 0 || red > 255) {
 			throw new IllegalArgumentException("Illegal Red Value");
 		}
-		colorValues = (colorValues & 0x00_FF_FF_FF) | (red << 24);
+		colorValues = (colorValues & 0xFF_00_FF_FF) | (red << 16);
 	}
 	
 	public int getRed() {
-		return (colorValues >> 24) & 0xFF;
-	}
-	
-	public int getGreen() {
 		return (colorValues >> 16) & 0xFF;
 	}
 	
+	public int getGreen() {
+		return (colorValues >> 8) & 0xFF;
+	}
+	
 	public int getBlue() {
-		return  (colorValues >> 8) & 0xFF;
+		return  colorValues & 0xFF;
 	}
 	
 	public int getAlpha() {
-		return colorValues & 0xFF;
+		return (colorValues >> 24) & 0xFF;
+	}
+	public int getARGB() {
+		return colorValues;
 	}
 	/**
 	 * https://en.wikipedia.org/wiki/Alpha_compositing

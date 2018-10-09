@@ -48,7 +48,12 @@ public class PencilTool extends CircleTool{
 	}
 	@Override
 	public BoundingBox getBoundingBox(int mouseX, int mouseY) {
-		int x = (int) Math.max(mouseX - radius, 0);
+		return getBoundingBox(mouseX, mouseY, 1.0);
+	}
+	
+	public BoundingBox getBoundingBox(int mouseX, int mouseY, double scale) {
+		double radius = this.radius * scale;
+		int x = (int) Math.max(mouseX - (radius), 0);
 		int y = (int) Math.max(mouseY - radius, 0);
 		return new BoundingBox(x, y, (int) (2*radius), (int) (2*radius));
 	}

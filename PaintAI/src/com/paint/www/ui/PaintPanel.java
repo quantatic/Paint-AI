@@ -7,10 +7,7 @@ import java.awt.Graphics2D;
 import java.awt.Shape;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionAdapter;
-import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
-import java.util.Random;
 
 import javax.swing.JPanel;
 import javax.swing.SwingWorker;
@@ -20,9 +17,6 @@ import com.paint.www.image.Image;
 import com.paint.www.image.Layer;
 import com.paint.www.image.LayerEffectsFactory;
 import com.paint.www.image.Pixel;
-import com.paint.www.io.ImageReader;
-import com.paint.www.tools.EraseTool;
-import com.paint.www.tools.PencilTool;
 import com.paint.www.tools.ToolBox;
 
 public class PaintPanel extends JPanel{
@@ -32,16 +26,20 @@ public class PaintPanel extends JPanel{
 	private final Image image;
 	private final Layer drawLayer;
 	private BufferedImage panelImage;
+	private BufferedImage scaledPanelImage;
 	private int mouseX, mouseY;
+	private double scale;
 	
 	public PaintPanel(int width, int height) {
+		scale = 1;
+		
 		image = new Image(width, height);
 		
-		//drawLayer = ImageReader.loadImageIntoLayer("out.png");
+		
 		drawLayer = LayerEffectsFactory.createVerticalGradient(width, height, new Pixel(255, 127, 0, 255), new Pixel(0, 127, 255, 255), 255);
 		panelImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+		updateScaledPanelImage(scale);
 		
-		//drawLayer = new Layer(width, height);
 		image.addLayer(drawLayer);
 		updatePanelImage(new BoundingBox(0, 0, width, height));
 		
@@ -57,12 +55,12 @@ public class PaintPanel extends JPanel{
 		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D)g;
 
-		g2d.drawImage(panelImage, 0, 0, this);
+		g2d.drawImage(scaledPanelImage, 0, 0, this);
 		g2d.setColor(Color.BLACK);
 		
 
 		if(ToolBox.getEquippedTool() != null) { //if we have an equipped tool at all
-			Shape cursor = ToolBox.getEquippedTool().getCursor(mouseX, mouseY);
+			Shape cursor = ToolBox.getEquippedTool().getCursor(mouseX, mouseY, scale);
 			g2d.draw(cursor);
 		}
 	}
@@ -83,11 +81,35 @@ public class PaintPanel extends JPanel{
 					Pixel thisPixel = image.getPixelAt(tmpX, tmpY);
 					int thisARGB = thisPixel.getARGB();
 					panelImage.setRGB(tmpX, tmpY, thisARGB);
+					scaledPanelImage.setRGB((int) (tmpX * scale),(int) (tmpY * scale), thisARGB);
 				}
 			}
 		}
 	}
 	
+	public void updateScaledPanelImage(int zoomScaleIncreaseAsPercentOfHundred) {
+		double trueScale = (zoomScaleIncreaseAsPercentOfHundred/ 100.0);
+		updateScaledPanelImage(trueScale + scale);
+	}
+	
+	public void updateScaledPanelImage(double scale) {
+		this.scale = scale;
+		scaledPanelImage = getScaledBufferedImage(panelImage, scale);
+		repaint();
+	}
+	
+	private BufferedImage getScaledBufferedImage(BufferedImage image, double scale) {
+		java.awt.Image toolkitImage = image.getScaledInstance((int)(scale*image.getWidth()), (int)(scale*image.getHeight()), 
+				java.awt.Image.SCALE_SMOOTH );
+		int width = toolkitImage.getWidth(null);
+		int height = toolkitImage.getHeight(null);
+		BufferedImage newImage = new BufferedImage(width, height, 
+			      BufferedImage.TYPE_INT_ARGB);
+		Graphics g = newImage.getGraphics();
+		g.drawImage(toolkitImage, 0, 0, null);
+		g.dispose();
+		return newImage;
+	}
 	
 	
 	private class DrawListener extends MouseAdapter {
@@ -99,8 +121,8 @@ public class PaintPanel extends JPanel{
 				
 				@Override
 				protected Object doInBackground() throws Exception {
-					int mouseX = e.getX();
-					int mouseY = e.getY();
+					int mouseX = (int) (e.getX() / scale);
+					int mouseY = (int) (e.getY() / scale);
 					ToolBox.useEquippedTool(mouseX, mouseY, drawLayer);
 					BoundingBox toUpdate = ToolBox.getEquippedTool().getBoundingBox(mouseX, mouseY);
 					updatePanelImage(toUpdate);

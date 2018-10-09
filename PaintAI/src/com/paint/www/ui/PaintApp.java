@@ -13,12 +13,13 @@ import com.paint.www.tools.PencilTool;
 import com.paint.www.tools.ToolBox;
 
 public class PaintApp extends JFrame implements Runnable{
-
+	private PaintPanel panel;
 	private static final long serialVersionUID = 8730310604205952203L;
 
 	@Override
 	public void run() {
-		add(new PaintPanel(1000, 1000));
+		panel = new PaintPanel(1000, 1000);
+		add(panel);
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("AI Paint Application");
@@ -51,6 +52,14 @@ public class PaintApp extends JFrame implements Runnable{
 			
 			if(e.getKeyCode() == KeyEvent.VK_S) {
 				ToolBox.setEquippedTool(new EraseTool(20));
+			}
+			
+			if(e.getKeyCode() == KeyEvent.VK_EQUALS || e.getKeyCode() == KeyEvent.VK_ADD) {
+				panel.updateScaledPanelImage(10);
+			}
+			
+			if(e.getKeyCode() == KeyEvent.VK_MINUS || e.getKeyCode() == KeyEvent.VK_UNDERSCORE) {
+				panel.updateScaledPanelImage(-10);
 			}
 		}
 	}

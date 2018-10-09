@@ -42,7 +42,7 @@ public class ImageWriter {
 			for(int y = 0; y < image.getHeight(); y++) {
 				for(int x = 0; x < image.getWidth(); x++) {
 					Pixel thisPixel = image.getPixelAt(x, y);
-					int thisARGB = (thisPixel.getAlpha() << 24) | (thisPixel.getRed() << 16) | (thisPixel.getGreen() << 8) | (thisPixel.getBlue());
+					int thisARGB = thisPixel.getARGB();
 					bufferedImage.setRGB(x, y, thisARGB);
 				}
 			}

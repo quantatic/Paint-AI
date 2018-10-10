@@ -10,10 +10,10 @@ import com.paint.www.image.Layer;
 import com.paint.www.image.Pixel;
 import com.paint.www.tools.ToolShape;
 
-public class CircleTool implements ToolShape{
+public class CircularTool implements ToolShape{
 	private double radius;
 
-	public CircleTool(double radius) {
+	public CircularTool(double radius) {
 		this.radius = radius;
 	}
 	

@@ -1,7 +1,7 @@
 package com.paint.www.tools;
 
 import com.paint.www.image.Layer;
-import com.paint.www.tools.shapes.CircleTool;
+import com.paint.www.tools.shapes.CircularTool;
 import com.paint.www.tools.types.EraseTool;
 
 /**
@@ -14,7 +14,7 @@ public class ToolBox {
 
 	public static void useEquippedTool(int mouseX,int mouseY, double scale, Layer layer) {
 		if(equippedTool == null) {
-			equippedTool = new EraseTool(new CircleTool(20.0));
+			equippedTool = new EraseTool(new CircularTool(20.0));
 		}
 		equippedTool.useTool(mouseX, mouseY, scale, layer);
 	}

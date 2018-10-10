@@ -9,7 +9,7 @@ import javax.swing.SwingUtilities;
 
 import com.paint.www.image.Pixel;
 import com.paint.www.tools.ToolBox;
-import com.paint.www.tools.shapes.CircleTool;
+import com.paint.www.tools.shapes.CircularTool;
 import com.paint.www.tools.types.EraseTool;
 import com.paint.www.tools.types.PencilTool;
 
@@ -48,11 +48,11 @@ public class PaintApp extends JFrame implements Runnable{
 		@Override
 		public void keyPressed(KeyEvent e) {
 			if(e.getKeyCode() == KeyEvent.VK_A) {
-				ToolBox.setEquippedTool(new PencilTool(new CircleTool(20), new Pixel(30, 30, 30, 70)));
+				ToolBox.setEquippedTool(new PencilTool(new CircularTool(20), new Pixel(30, 30, 30, 70)));
 			}
 			
 			if(e.getKeyCode() == KeyEvent.VK_S) {
-				ToolBox.setEquippedTool(new EraseTool(new CircleTool(20)));
+				ToolBox.setEquippedTool(new EraseTool(new CircularTool(20)));
 			}
 			
 			if(e.getKeyCode() == KeyEvent.VK_EQUALS || e.getKeyCode() == KeyEvent.VK_ADD) {

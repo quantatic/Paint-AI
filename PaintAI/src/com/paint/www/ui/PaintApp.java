@@ -47,7 +47,7 @@ public class PaintApp extends JFrame implements Runnable{
 		@Override
 		public void keyPressed(KeyEvent e) {
 			if(e.getKeyCode() == KeyEvent.VK_A) {
-				ToolBox.setEquippedTool(new PencilTool(new Pixel(30, 30, 30, 30), 20));
+				ToolBox.setEquippedTool(new PencilTool(new Pixel(30, 30, 30, 70), 20));
 			}
 			
 			if(e.getKeyCode() == KeyEvent.VK_S) {

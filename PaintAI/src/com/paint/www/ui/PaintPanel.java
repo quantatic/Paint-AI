@@ -17,6 +17,7 @@ import com.paint.www.image.Image;
 import com.paint.www.image.Layer;
 import com.paint.www.image.LayerEffectsFactory;
 import com.paint.www.image.Pixel;
+import com.paint.www.io.ImageReader;
 import com.paint.www.tools.ToolBox;
 
 public class PaintPanel extends JPanel{
@@ -33,10 +34,13 @@ public class PaintPanel extends JPanel{
 	public PaintPanel(int width, int height) {
 		scale = 1;
 		
+		drawLayer = ImageReader.loadImageIntoLayer("out.png");
+		width = drawLayer.getWidth();
+		height = drawLayer.getHeight();
 		image = new Image(width, height);
 		
 		
-		drawLayer = LayerEffectsFactory.createVerticalGradient(width, height, new Pixel(255, 127, 0, 255), new Pixel(0, 127, 255, 255), 255);
+		//drawLayer = LayerEffectsFactory.createVerticalGradient(width, height, new Pixel(255, 127, 0, 255), new Pixel(0, 127, 255, 255), 255);
 		panelImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 		updateScaledPanelImage(scale);
 		
@@ -81,10 +85,24 @@ public class PaintPanel extends JPanel{
 					Pixel thisPixel = image.getPixelAt(tmpX, tmpY);
 					int thisARGB = thisPixel.getARGB();
 					panelImage.setRGB(tmpX, tmpY, thisARGB);
-					scaledPanelImage.setRGB((int) (tmpX * scale),(int) (tmpY * scale), thisARGB);
 				}
 			}
 		}
+		
+		x = (int) (x * scale);
+		y = (int) (y * scale);
+		width = (int) (width * scale);
+		height = (int) (height * scale);
+		for(int tmpY = y; tmpY < y + height; tmpY++) {
+			for(int tmpX = x; tmpX < x + height; tmpX++) {
+				if(tmpX >= 0 && tmpX < image.getWidth() && tmpY >= 0 && tmpY < image.getHeight()) {
+					Pixel thisPixel = image.getPixelAt((int) (tmpX / scale), (int) (tmpY / scale));
+					int thisARGB = thisPixel.getARGB();
+					scaledPanelImage.setRGB(tmpX, tmpY, thisARGB);
+				}
+			}
+		}
+
 	}
 	
 	public void updateScaledPanelImage(int zoomScaleIncreaseAsPercentOfHundred) {
@@ -93,6 +111,9 @@ public class PaintPanel extends JPanel{
 	}
 	
 	public void updateScaledPanelImage(double scale) {
+		if(scale <= 0.01) {
+			throw new IllegalArgumentException("Scale must be greater than 0.01");
+		}
 		this.scale = scale;
 		scaledPanelImage = getScaledBufferedImage(panelImage, scale);
 		repaint();

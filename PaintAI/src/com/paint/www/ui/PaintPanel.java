@@ -144,8 +144,8 @@ public class PaintPanel extends JPanel{
 				protected Object doInBackground() throws Exception {
 					int mouseX = (int) (e.getX() / scale);
 					int mouseY = (int) (e.getY() / scale);
-					ToolBox.useEquippedTool(mouseX, mouseY, drawLayer);
-					BoundingBox toUpdate = ToolBox.getEquippedTool().getBoundingBox(mouseX, mouseY);
+					ToolBox.useEquippedTool(mouseX, mouseY, scale, drawLayer);
+					BoundingBox toUpdate = ToolBox.getEquippedTool().getToolShape().getBoundingBox(mouseX, mouseY);
 					updatePanelImage(toUpdate);
 					repaint();
 					return null;

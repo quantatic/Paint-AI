@@ -8,9 +8,10 @@ import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
 import com.paint.www.image.Pixel;
-import com.paint.www.tools.EraseTool;
-import com.paint.www.tools.PencilTool;
 import com.paint.www.tools.ToolBox;
+import com.paint.www.tools.shapes.CircleTool;
+import com.paint.www.tools.types.EraseTool;
+import com.paint.www.tools.types.PencilTool;
 
 public class PaintApp extends JFrame implements Runnable{
 	private PaintPanel panel;
@@ -47,11 +48,11 @@ public class PaintApp extends JFrame implements Runnable{
 		@Override
 		public void keyPressed(KeyEvent e) {
 			if(e.getKeyCode() == KeyEvent.VK_A) {
-				ToolBox.setEquippedTool(new PencilTool(new Pixel(30, 30, 30, 70), 20));
+				ToolBox.setEquippedTool(new PencilTool(new CircleTool(20), new Pixel(30, 30, 30, 70)));
 			}
 			
 			if(e.getKeyCode() == KeyEvent.VK_S) {
-				ToolBox.setEquippedTool(new EraseTool(20));
+				ToolBox.setEquippedTool(new EraseTool(new CircleTool(20)));
 			}
 			
 			if(e.getKeyCode() == KeyEvent.VK_EQUALS || e.getKeyCode() == KeyEvent.VK_ADD) {

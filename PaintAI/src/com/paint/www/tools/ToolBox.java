@@ -1,6 +1,8 @@
 package com.paint.www.tools;
 
 import com.paint.www.image.Layer;
+import com.paint.www.tools.shapes.CircleTool;
+import com.paint.www.tools.types.EraseTool;
 
 /**
  * Represents a ToolBox, which holds an equipped {@link Tool}.
@@ -10,11 +12,11 @@ import com.paint.www.image.Layer;
 public class ToolBox {
 	private static Tool equippedTool;
 
-	public static void useEquippedTool(int mouseX,int mouseY, Layer layer) {
+	public static void useEquippedTool(int mouseX,int mouseY, double scale, Layer layer) {
 		if(equippedTool == null) {
-			equippedTool = new EraseTool(20.0);
+			equippedTool = new EraseTool(new CircleTool(20.0));
 		}
-		equippedTool.useTool(mouseX, mouseY, layer);
+		equippedTool.useTool(mouseX, mouseY, scale, layer);
 	}
 	
 	public static Tool getEquippedTool() {
